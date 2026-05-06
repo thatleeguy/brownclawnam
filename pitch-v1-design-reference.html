@@ -1,0 +1,2010 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Brownclaw Asset Management — Reliability Engineering for Heavy Industry</title>
+<meta name="description" content="A reliability and asset-management practice for mining and energy operators. Based in Fernie, BC. Led by Connor Schriver, P.Eng, CMRP." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   BROWNCLAW ASSET MANAGEMENT — Heavy industrial direction
+   Engineering-grade. Steel. Hi-vis amber. CAD/HMI vocabulary.
+   ============================================================ */
+
+:root{
+  /* Palette — industrial steel + hi-vis amber */
+  --steel-0:    #07090C;   /* deepest */
+  --steel-1:    #0D1014;   /* canvas */
+  --steel-2:    #14181F;   /* surface */
+  --steel-3:    #1B2028;   /* card */
+  --steel-4:    #232932;   /* hover/elevated */
+  --rule-1:     #262C35;   /* hairline */
+  --rule-2:     #353C46;   /* visible border */
+  --rule-3:     #4A525E;   /* high-contrast border */
+  --txt:        #ECEEF0;
+  --txt-2:      #A8AEB6;
+  --mute:       #6B727B;
+  --amber:      #F2A82A;   /* hi-vis equipment amber, from logo */
+  --amber-2:    #C7841A;
+  --amber-glow: rgba(242,168,42,.22);
+  --hazard:     #E04638;   /* warning red */
+  --safety:     #F4D013;   /* safety yellow (rare) */
+  --steel-blue: #4F86C2;   /* tech accent (rare) */
+  --grid-line:  rgba(255,255,255,0.035);
+  --grid-line-2:rgba(255,255,255,0.07);
+
+  /* Type */
+  --display: "Archivo", "Helvetica Neue", system-ui, sans-serif;
+  --body:    "IBM Plex Sans", system-ui, "Helvetica Neue", sans-serif;
+  --cond:    "IBM Plex Sans Condensed", "Archivo", sans-serif;
+  --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Spacing */
+  --pad:    clamp(20px, 4vw, 56px);
+  --maxw:   1440px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ background:var(--steel-1); color:var(--txt); }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+body{
+  font-family:var(--body);
+  font-size:15px; line-height:1.55;
+  letter-spacing:-0.005em;
+  overflow-x:hidden;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(242,168,42,0.06), transparent 50%),
+    var(--steel-1);
+}
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+::selection{ background:var(--amber); color:var(--steel-0); }
+
+/* ---------- Type primitives ---------- */
+.lbl{
+  font-family:var(--mono); font-size:11px; font-weight:500;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--txt-2);
+}
+.lbl .dot{ color:var(--amber); margin:0 .35em; }
+.lbl .num{ color:var(--amber); }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--mono); font-size:11px; font-weight:500;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--amber);
+}
+.eyebrow::before{
+  content:""; width:14px; height:1.5px; background:var(--amber);
+}
+
+.disp-xxl{
+  font-family:var(--display); font-weight:800;
+  font-size: clamp(56px, 9vw, 132px);
+  line-height: 0.94; letter-spacing:-0.038em;
+  color:var(--txt);
+}
+.disp-xl{
+  font-family:var(--display); font-weight:800;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 0.96; letter-spacing:-0.034em;
+}
+.disp-l{
+  font-family:var(--display); font-weight:700;
+  font-size: clamp(32px, 4.4vw, 60px);
+  line-height: 1.0; letter-spacing:-0.028em;
+}
+.disp-m{
+  font-family:var(--display); font-weight:700;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.1; letter-spacing:-0.018em;
+}
+
+.cond{ font-family:var(--cond); font-weight:700; letter-spacing:-0.005em; text-transform:uppercase; }
+.uc{ text-transform:uppercase; letter-spacing:0.04em; }
+.tabular{ font-variant-numeric:tabular-nums; }
+.muted{ color:var(--txt-2); }
+
+.hi{ color:var(--amber); }
+.hz{ color:var(--hazard); }
+
+/* ---------- Layout ---------- */
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+section{ position:relative; }
+
+/* hard rule */
+.rule{ height:1px; background:var(--rule-1); width:100%; }
+.rule-2{ height:1px; background:var(--rule-2); width:100%; }
+
+/* corner ticks decoration */
+.ticks{ position:relative; }
+.ticks::before, .ticks::after{
+  content:""; position:absolute; width:10px; height:10px;
+  border:1px solid var(--rule-3);
+}
+.ticks::before{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.ticks::after{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+
+/* ---------- Top status bar (HMI-style) ---------- */
+.statusbar{
+  background: var(--steel-0);
+  border-bottom:1px solid var(--rule-1);
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--mute);
+}
+.statusbar .row{
+  height:30px;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.statusbar .left{ display:flex; align-items:center; gap:18px; }
+.statusbar .right{ display:flex; align-items:center; gap:18px; }
+.statusbar .pill{
+  display:inline-flex; align-items:center; gap:6px;
+  color:var(--txt);
+}
+.statusbar .pill .led{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--amber); box-shadow:0 0 8px var(--amber-glow);
+  animation: pulse 1.8s infinite ease-in-out;
+}
+@keyframes pulse{ 0%,100%{opacity:.6}50%{opacity:1} }
+.statusbar b{ color:var(--txt); font-weight:500; }
+@media (max-width:760px){ .statusbar .clip{ display:none; } }
+
+/* ---------- Top nav ---------- */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  background: rgba(13,16,20,0.85);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-bottom:1px solid var(--rule-1);
+}
+.topbar-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  height:68px;
+}
+.brand{ display:flex; align-items:center; gap:12px; }
+.brand .mark{ width:34px; height:34px; flex-shrink:0; }
+.brand .word{ display:flex; flex-direction:column; line-height:1; }
+.brand .word .a{
+  font-family:var(--display); font-weight:800;
+  font-size:17px; letter-spacing:-0.012em; color:var(--txt);
+}
+.brand .word .b{
+  font-family:var(--mono); font-weight:500;
+  font-size:9.5px; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--mute); margin-top:4px;
+}
+.nav{ display:flex; align-items:center; gap:4px; }
+.nav .item{
+  font-family:var(--mono); font-size:11.5px; font-weight:500;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--txt-2);
+  padding:10px 14px;
+  position:relative;
+  transition: color .25s;
+}
+.nav .item:hover{ color:var(--txt); }
+.nav .item .num{ color:var(--mute); margin-right:6px; font-size:10px; }
+.nav .item:hover .num{ color:var(--amber); }
+.nav .cta{
+  display:inline-flex; align-items:center; gap:10px;
+  margin-left:14px;
+  padding:11px 18px; background:var(--amber); color:var(--steel-0);
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  letter-spacing:0.14em; text-transform:uppercase;
+  transition: background .2s, transform .2s;
+  border:1px solid var(--amber);
+}
+.nav .cta:hover{ background:#FFB937; }
+.nav .cta .arr{ transition:transform .25s; }
+.nav .cta:hover .arr{ transform:translateX(3px); }
+@media (max-width:980px){ .nav .item{ display:none; } }
+
+/* ---------- HERO ---------- */
+.hero{
+  padding: clamp(48px, 7vw, 96px) 0 0;
+  position:relative; overflow:hidden;
+}
+/* faint engineering grid background */
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, black 60%, transparent 100%);
+}
+
+.hero-meta{
+  display:flex; justify-content:space-between; align-items:baseline;
+  flex-wrap:wrap; gap:14px;
+  padding: 14px 0;
+  margin-bottom: 48px;
+  border-top:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+}
+.hero-meta .left{ display:flex; gap:18px; align-items:center; }
+.hero-meta b{ color:var(--txt); font-weight:500; }
+.hero-meta .sep{ color:var(--rule-3); }
+
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items:start;
+  position:relative;
+}
+@media (max-width:1080px){ .hero-grid{ grid-template-columns:1fr; } }
+
+.hero-text .eyebrow{ margin-bottom:28px; }
+
+.hero h1{
+  font-family:var(--display); font-weight:800;
+  font-size: clamp(34px, 4.4vw, 64px);
+  line-height: 1.0;
+  letter-spacing:-0.028em;
+  text-wrap:balance;
+}
+.hero h1 .kw{
+  background: linear-gradient(180deg, transparent 62%, rgba(242,168,42,0.20) 62%);
+  padding: 0 0.06em;
+}
+.hero h1 .am{ color:var(--amber); }
+
+.hero-sub{
+  margin-top: 28px;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
+  color: var(--txt-2);
+  max-width: 56ch;
+}
+.hero-sub b{ color:var(--txt); font-weight:500; }
+
+.hero-cta{
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  margin-top: 40px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:12px;
+  padding: 15px 22px;
+  font-family:var(--mono); font-size:12px; font-weight:600;
+  letter-spacing:0.14em; text-transform:uppercase;
+  border:1px solid var(--rule-2);
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+}
+.btn-amber{ background:var(--amber); color:var(--steel-0); border-color:var(--amber); }
+.btn-amber:hover{ background:#FFB937; border-color:#FFB937; }
+.btn-ghost{ background:transparent; color:var(--txt); border-color:var(--rule-3); }
+.btn-ghost:hover{ background:var(--steel-3); border-color:var(--rule-3); }
+.btn .arr{ transition:transform .25s; }
+.btn:hover .arr{ transform:translateX(4px); }
+
+.spec-row{
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top:1px solid var(--rule-1);
+  display:grid; grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+@media (max-width:680px){ .spec-row{ grid-template-columns: repeat(2, 1fr); } }
+.spec{
+  display:flex; flex-direction:column; gap:6px;
+}
+.spec .l{
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+}
+.spec .v{
+  font-family:var(--display); font-weight:700;
+  font-size: 22px; color:var(--txt); letter-spacing:-0.012em;
+}
+.spec .v small{ color:var(--amber); font-size:0.7em; margin-left:4px; font-weight:600; }
+
+/* hero photo panel — engineering frame around real site image */
+.hero-photo{
+  position:relative;
+  background: var(--steel-2);
+  border:1px solid var(--rule-2);
+  padding: 18px;
+  display:flex; flex-direction:column;
+}
+.hero-photo .ph-head,
+.hero-photo .ph-foot{
+  display:flex; justify-content:space-between; gap: 18px;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+}
+.hero-photo .ph-head{ padding-bottom: 14px; border-bottom:1px solid var(--rule-1); }
+.hero-photo .ph-foot{ padding-top: 14px; border-top:1px solid var(--rule-1); }
+.hero-photo .ph-head b{ color:var(--txt); font-weight:500; }
+.hero-photo .ph-head .right{ color:var(--amber); }
+.hero-photo .ph-foot b{ color:var(--txt); font-weight:500; }
+
+.hero-photo .ph-frame{
+  position:relative;
+  margin: 16px 0;
+  border: 1px solid var(--rule-2);
+  background: var(--steel-1);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.hero-photo .ph-frame img{
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  filter: contrast(1.04) saturate(0.9) brightness(0.94);
+}
+.hero-photo .ph-frame::after{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(13,16,20,0.0) 55%, rgba(13,16,20,0.55) 100%),
+    linear-gradient(0deg,   rgba(13,16,20,0.0) 75%, rgba(13,16,20,0.30) 100%);
+  pointer-events:none;
+}
+
+.hero-photo .corner{
+  position:absolute; width:14px; height:14px;
+  border:1px solid var(--amber); z-index:3;
+}
+.hero-photo .corner.tl{ top:10px; left:10px;  border-right:0; border-bottom:0; }
+.hero-photo .corner.tr{ top:10px; right:10px; border-left:0;  border-bottom:0; }
+.hero-photo .corner.bl{ bottom:10px; left:10px;  border-right:0; border-top:0; }
+.hero-photo .corner.br{ bottom:10px; right:10px; border-left:0;  border-top:0; }
+
+.hero-photo .ph-tag{
+  position:absolute; z-index:4;
+  background: rgba(7,9,12,0.78);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--rule-3);
+  padding: 8px 12px 9px;
+  display:flex; flex-direction:column; gap: 3px;
+  font-family:var(--mono); font-size: 9.5px;
+  letter-spacing:0.14em; text-transform:uppercase; color: var(--txt-2);
+  max-width: 220px;
+}
+.hero-photo .ph-tag b{ color:var(--txt); font-weight:600; font-size:11px; letter-spacing:0.16em; }
+.hero-photo .ph-tag small{ color: var(--mute); font-size: 9.5px; letter-spacing:0.12em; }
+.hero-photo .ph-tag .dot{
+  position:absolute; left:-1px; top:-1px;
+  width:8px; height:8px; background: var(--steel-blue);
+  border:1px solid var(--steel-1);
+}
+.hero-photo .ph-tag .dot.amb{ background: var(--amber); }
+.hero-photo .ph-tag.tag-tl{ left:24px; top:24px; }
+.hero-photo .ph-tag.tag-br{ right:24px; bottom:24px; }
+@media (max-width:600px){ .hero-photo .ph-tag{ max-width: 160px; padding: 6px 10px; } }
+
+/* commodity ribbon — hard, dense, industrial */
+.ribbon{
+  margin-top: clamp(48px, 6vw, 80px);
+  border-top:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+  background:var(--steel-2);
+  padding: 22px 0;
+  position:relative;
+  z-index: 5;
+}
+.ribbon .row{
+  display:flex; align-items:center; gap: 30px; flex-wrap:wrap;
+  justify-content: space-between;
+}
+.ribbon .label{
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+}
+.ribbon ul{
+  list-style:none; display:flex; flex-wrap:wrap; gap: 6px 6px;
+}
+.ribbon li{
+  font-family:var(--cond); font-weight:700;
+  font-size: 13px; letter-spacing:0.04em; text-transform:uppercase;
+  padding: 7px 12px; border:1px solid var(--rule-2);
+  color:var(--txt-2);
+  background: var(--steel-1);
+}
+.ribbon li.act{ color:var(--steel-0); background:var(--amber); border-color:var(--amber); }
+
+/* ---------- POSITION (manifesto) ---------- */
+.position{
+  padding: clamp(80px, 9vw, 144px) 0;
+}
+.position .grid{
+  display:grid; grid-template-columns: 320px 1fr;
+  gap: clamp(28px, 5vw, 80px);
+  align-items:start;
+}
+@media (max-width:880px){ .position .grid{ grid-template-columns:1fr; } }
+.position .label-col{ position:sticky; top:118px; }
+.position .label-col .num{
+  font-family:var(--display); font-weight:800;
+  font-size: 80px; line-height: 1; letter-spacing:-0.04em;
+  color:var(--amber);
+}
+.position .label-col .num small{
+  display:block; font-family:var(--mono); font-size:11px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  margin-top: 8px; font-weight:500;
+}
+.position .label-col h3{
+  font-family:var(--display); font-weight:700;
+  font-size: 22px; margin-top: 20px; letter-spacing:-0.018em;
+  border-top:1px solid var(--rule-1);
+  padding-top: 20px;
+}
+
+.position p{
+  font-family:var(--display); font-weight:500;
+  font-size: clamp(20px, 1.9vw, 28px);
+  line-height: 1.4;
+  letter-spacing:-0.012em;
+  color: var(--txt);
+  max-width: 38ch;
+  text-wrap:balance;
+}
+.position p + p{ margin-top: 1.1em; }
+.position p .am{ color:var(--amber); }
+.position p b{ color:var(--txt); font-weight:700; }
+.position p .strike{ text-decoration: line-through; text-decoration-color: var(--hazard); color:var(--mute); }
+
+.position .signoff{
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top:1px solid var(--rule-1);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+}
+.position .signoff b{ color:var(--txt); font-weight:500; }
+
+/* ---------- PRACTICE ---------- */
+.practice{
+  padding: clamp(80px, 9vw, 128px) 0;
+  background: var(--steel-2);
+  border-top:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+}
+.section-head{
+  display:grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 80px);
+  align-items:end;
+  margin-bottom: 64px;
+}
+@media (max-width:880px){ .section-head{ grid-template-columns:1fr; } }
+.section-head h2{ max-width: 16ch; }
+.section-head .right{ color:var(--txt-2); max-width:54ch; font-size:15px; line-height:1.6; }
+
+.practice-grid{
+  display:grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border:1px solid var(--rule-2);
+  background: var(--steel-1);
+}
+@media (max-width:980px){ .practice-grid{ grid-template-columns: 1fr; } }
+
+.practice-cell{
+  padding: 28px 28px 32px;
+  border-right:1px solid var(--rule-1);
+  display:flex; flex-direction:column; gap: 18px;
+  position:relative;
+  background: var(--steel-2);
+  transition: background .2s;
+}
+.practice-cell:last-child{ border-right:0; }
+@media (max-width:980px){
+  .practice-cell{ border-right:0; border-bottom:1px solid var(--rule-1); }
+  .practice-cell:last-child{ border-bottom:0; }
+}
+.practice-cell:hover{ background: var(--steel-3); }
+.practice-cell .id{
+  display:flex; align-items:center; justify-content:space-between;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  padding-bottom: 12px; border-bottom:1px solid var(--rule-1);
+}
+.practice-cell .id .n{ color:var(--amber); font-weight:600; }
+.practice-cell h3{
+  font-family:var(--display); font-weight:700;
+  font-size: clamp(22px, 1.8vw, 26px);
+  line-height: 1.1; letter-spacing:-0.018em;
+}
+.practice-cell .body{
+  color: var(--txt-2); font-size: 14.5px; line-height: 1.6;
+}
+.practice-cell .deliv{
+  display:flex; flex-direction:column; gap: 6px;
+  padding-top: 12px;
+  border-top:1px dashed var(--rule-2);
+}
+.practice-cell .deliv .dl{
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+  margin-bottom: 4px;
+}
+.practice-cell .deliv ul{
+  list-style:none; display:flex; flex-wrap:wrap; gap:5px 5px;
+}
+.practice-cell .deliv li{
+  font-family:var(--mono); font-size:10.5px; font-weight:500;
+  letter-spacing:0.06em; text-transform:uppercase; color:var(--txt);
+  padding: 4px 7px;
+  background: var(--steel-1);
+  border:1px solid var(--rule-2);
+}
+.practice-cell .deliv li.am{ color:var(--amber); border-color:var(--amber-2); }
+.practice-cell .read{
+  margin-top: auto; padding-top: 16px;
+  display:inline-flex; align-items:center; gap: 10px;
+  font-family:var(--mono); font-size: 11px; font-weight:600;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--amber);
+}
+.practice-cell .read .arr{ transition: transform .25s; }
+.practice-cell:hover .read .arr{ transform: translateX(5px); }
+
+/* ---------- EVIDENCE / KPI band ---------- */
+.evidence{
+  padding: clamp(80px, 9vw, 132px) 0;
+  background: var(--steel-1);
+  position:relative;
+  overflow:hidden;
+}
+.evidence::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(242,168,42,0.10), transparent 55%);
+  pointer-events:none;
+}
+.evidence .head{
+  display:grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 80px); align-items:end;
+  margin-bottom: 56px;
+  position:relative;
+}
+@media (max-width:880px){ .evidence .head{ grid-template-columns: 1fr; } }
+.evidence h2{ max-width: 18ch; }
+.evidence h2 .am{ color:var(--amber); }
+.evidence .head .meta{ color:var(--txt-2); max-width:48ch; font-size:14.5px; line-height:1.6; }
+
+.kpi-grid{
+  display:grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border:1px solid var(--rule-2);
+}
+@media (max-width:980px){ .kpi-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:560px){ .kpi-grid{ grid-template-columns: 1fr; } }
+.kpi{
+  padding: 28px 24px 26px;
+  display:flex; flex-direction:column; gap: 16px;
+  border-right:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+  background: var(--steel-2);
+  position:relative;
+  min-height: 240px;
+}
+@media (min-width:561px){
+  .kpi:nth-child(4n){ border-right: 0; }
+  .kpi:nth-last-child(-n+1){ border-bottom: 0; }
+}
+.kpi .head-row{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+  padding-bottom: 12px; border-bottom:1px solid var(--rule-1);
+}
+.kpi .head-row .nme{ color:var(--txt-2); }
+.kpi .head-row .src{ color:var(--amber); }
+.kpi .v{
+  font-family:var(--display); font-weight:800;
+  font-size: clamp(48px, 5vw, 76px);
+  line-height: 1; letter-spacing:-0.04em;
+  color:var(--txt);
+}
+.kpi .v .u{ color:var(--amber); font-size: 0.5em; vertical-align: 0.3em; margin-left: 0.05em; font-weight:700; }
+.kpi .v .pre{ color:var(--amber); font-size: 0.55em; vertical-align: 0.25em; margin-right: 0.05em; font-weight:700; }
+.kpi .delta{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--mono); font-size:11px; font-weight:500;
+  letter-spacing:0.08em; color:var(--amber);
+}
+.kpi .delta.dn{ color:var(--amber); }
+.kpi .delta::before{ content:"▼"; font-size:9px; }
+.kpi .delta.up::before{ content:"▲"; }
+.kpi .desc{ color:var(--txt-2); font-size:13.5px; line-height:1.55; }
+.kpi .ctx{
+  margin-top:auto; padding-top:8px;
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+}
+
+/* ---------- CASE / WORK ---------- */
+.work{
+  padding: clamp(80px, 9vw, 128px) 0;
+  background: var(--steel-2);
+  border-top:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+}
+
+.workcard{
+  display:grid; grid-template-columns: 1.1fr 1fr;
+  gap:0;
+  border:1px solid var(--rule-2);
+  background: var(--steel-1);
+  overflow:hidden;
+  position:relative;
+}
+@media (max-width:1100px){ .workcard{ grid-template-columns: 1fr; } }
+.workcard .text{
+  padding: clamp(28px, 3.5vw, 44px);
+  display:flex; flex-direction:column; gap: 22px;
+  border-right:1px solid var(--rule-1);
+}
+@media (max-width:1100px){ .workcard .text{ border-right:0; border-bottom:1px solid var(--rule-1); } }
+.workcard .meta{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  padding-bottom: 14px; border-bottom:1px solid var(--rule-1);
+}
+.workcard .meta b{ color:var(--txt); font-weight:500; }
+.workcard h3{
+  font-family:var(--display); font-weight:800;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+.workcard .summary{
+  color: var(--txt-2); font-size: 15px; line-height: 1.6; max-width: 56ch;
+}
+
+.workcard .stats{
+  display:grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+  padding: 22px 0;
+}
+.workcard .stat{
+  padding: 0 22px 0 0;
+  border-right:1px solid var(--rule-1);
+}
+.workcard .stat:last-child{ border-right:0; padding-right:0; }
+.workcard .stat .v{
+  font-family:var(--display); font-weight:800;
+  font-size: clamp(28px, 3vw, 40px); line-height:1; letter-spacing:-0.025em;
+  color: var(--txt);
+}
+.workcard .stat .v .am{ color:var(--amber); font-size:0.7em; vertical-align:0.2em; }
+.workcard .stat .l{
+  font-family:var(--mono); font-size:10.5px; font-weight:500;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+  margin-top: 8px;
+}
+
+.workcard .read{
+  margin-top:auto;
+  display:inline-flex; align-items:center; gap: 12px;
+  font-family:var(--mono); font-size: 11px; font-weight:600;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--amber);
+}
+.workcard:hover .read .arr{ transform: translateX(5px); }
+.workcard .read .arr{ transition: transform .25s; }
+
+.workcard .visual{
+  position:relative;
+  background: var(--steel-1);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 360px;
+  overflow:hidden;
+}
+.workcard .visual .stamp{
+  position:absolute; top:18px; right:20px;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  text-align:right;
+}
+.workcard .visual .stamp b{ color:var(--amber); display:block; font-weight:600; }
+.workcard .visual .pid{ position:absolute; inset:0; }
+
+.work-related{
+  margin-top: 40px;
+  display:grid; grid-template-columns: repeat(3, 1fr);
+  gap:0;
+  border-top:1px solid var(--rule-1);
+}
+@media (max-width:980px){ .work-related{ grid-template-columns: 1fr; } }
+.work-related a{
+  padding: 24px 24px 24px 0;
+  border-right:1px solid var(--rule-1);
+  display:flex; flex-direction:column; gap:8px;
+  transition: opacity .25s;
+}
+.work-related a:last-child{ border-right:0; }
+@media (max-width:980px){ .work-related a{ border-right:0; border-bottom:1px solid var(--rule-1); padding-right:24px; } }
+.work-related a:hover{ opacity:.78; }
+.work-related .tag{
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--amber);
+}
+.work-related h4{
+  font-family:var(--display); font-weight:700;
+  font-size: 17px; line-height:1.18; letter-spacing:-0.012em;
+  color:var(--txt);
+  max-width:32ch;
+}
+.work-related .meta{
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  margin-top:auto;
+}
+
+/* ---------- CRITICALITY MATRIX (extra credibility piece) ---------- */
+.crit{
+  padding: clamp(80px, 9vw, 128px) 0;
+  position:relative;
+  overflow:hidden;
+}
+.crit-grid{
+  display:grid; grid-template-columns: 1fr 1.2fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items:center;
+}
+@media (max-width:1080px){ .crit-grid{ grid-template-columns: 1fr; } }
+.crit .text h2{ max-width: 18ch; }
+.crit .text h2 .am{ color:var(--amber); }
+.crit .text p{ color:var(--txt-2); font-size:15px; line-height:1.65; max-width: 52ch; margin-top:24px; }
+.crit .text .checks{
+  margin-top: 32px; display:flex; flex-direction:column; gap:12px;
+}
+.crit .text .checks div{
+  display:flex; gap:14px; align-items:flex-start;
+  padding: 12px 0; border-bottom: 1px solid var(--rule-1);
+}
+.crit .text .checks .ch{
+  width:18px; height:18px; flex-shrink:0;
+  border:1px solid var(--amber); display:inline-flex; align-items:center; justify-content:center;
+  margin-top:1px;
+}
+.crit .text .checks .ch::after{
+  content:""; width:8px; height:8px; background:var(--amber);
+}
+.crit .text .checks span{ font-size:14.5px; line-height:1.5; color:var(--txt); }
+.crit .text .checks span b{ color:var(--amber); font-weight:600; }
+
+.crit-matrix{
+  background: var(--steel-2);
+  border:1px solid var(--rule-2);
+  padding: 28px;
+}
+.crit-matrix .head{
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  margin-bottom: 18px;
+}
+.crit-matrix .head b{ color:var(--txt); font-weight:500; }
+.crit-matrix .head .right{ color:var(--amber); }
+.crit-matrix table{
+  width:100%; border-collapse: collapse;
+  font-family:var(--mono); font-size:11px;
+}
+.crit-matrix th, .crit-matrix td{
+  padding: 10px 8px;
+  text-align:left;
+  border-bottom: 1px solid var(--rule-1);
+  letter-spacing: 0.04em;
+}
+.crit-matrix th{
+  text-transform: uppercase; color:var(--mute); font-weight:500;
+  font-size:10px; letter-spacing:0.16em;
+  border-bottom:1px solid var(--rule-2);
+}
+.crit-matrix td{ color: var(--txt); }
+.crit-matrix td.id{ color:var(--mute); }
+.crit-matrix td.eq{ color:var(--txt); font-weight:500; }
+.crit-matrix .pill{
+  display:inline-flex; align-items:center; gap:5px;
+  padding: 2px 8px;
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:0.1em; text-transform:uppercase;
+  border:1px solid;
+}
+.crit-matrix .pill.h{ color:var(--hazard); border-color:var(--hazard); background:rgba(224,70,56,0.08); }
+.crit-matrix .pill.m{ color:var(--amber); border-color:var(--amber-2); background:rgba(242,168,42,0.08); }
+.crit-matrix .pill.l{ color:var(--steel-blue); border-color:var(--steel-blue); background:rgba(79,134,194,0.08); }
+.crit-matrix .bar{
+  display:inline-block; width:60px; height:6px; background:var(--rule-1);
+  position:relative;
+}
+.crit-matrix .bar::after{
+  content:""; position:absolute; left:0; top:0; bottom:0;
+  background: var(--amber);
+}
+.crit-matrix .bar.b80::after{ width:80%; }
+.crit-matrix .bar.b60::after{ width:60%; }
+.crit-matrix .bar.b40::after{ width:40%; background:var(--steel-blue); }
+.crit-matrix .bar.b95::after{ width:95%; background:var(--hazard); }
+.crit-matrix .bar.b25::after{ width:25%; background:var(--steel-blue); }
+
+/* ---------- BRIEFINGS / Insights ---------- */
+.briefings{
+  padding: clamp(80px, 9vw, 128px) 0;
+  background: var(--steel-2);
+  border-top:1px solid var(--rule-1);
+  border-bottom:1px solid var(--rule-1);
+}
+.brief-grid{
+  display:grid; grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 0;
+  border:1px solid var(--rule-2);
+  background:var(--steel-1);
+}
+@media (max-width:1100px){ .brief-grid{ grid-template-columns: 1fr; } }
+.brief{
+  padding: 28px 28px 32px;
+  border-right:1px solid var(--rule-1);
+  display:flex; flex-direction:column; gap: 18px;
+  background: var(--steel-2);
+  transition: background .2s;
+  min-height: 380px;
+  position:relative;
+}
+.brief:last-child{ border-right:0; }
+@media (max-width:1100px){
+  .brief{ border-right:0; border-bottom:1px solid var(--rule-1); }
+  .brief:last-child{ border-bottom:0; }
+}
+.brief:hover{ background: var(--steel-3); }
+.brief .id{
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  padding-bottom: 14px; border-bottom:1px solid var(--rule-1);
+}
+.brief .id .am{ color:var(--amber); }
+.brief .id b{ color:var(--txt); font-weight:500; }
+.brief h3{
+  font-family:var(--display); font-weight:700;
+  font-size: clamp(20px, 1.6vw, 24px);
+  line-height: 1.18; letter-spacing:-0.014em;
+  color: var(--txt);
+  text-wrap: balance;
+}
+.brief.lead h3{ font-size: clamp(26px, 2.4vw, 36px); line-height:1.08; font-weight:800; }
+.brief .excerpt{
+  color: var(--txt-2); font-size: 14px; line-height: 1.6; max-width: 38ch;
+}
+.brief .read{
+  margin-top:auto;
+  display:inline-flex; align-items:center; gap: 10px;
+  font-family:var(--mono); font-size: 11px; font-weight:600;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--amber);
+}
+.brief .read .arr{ transition: transform .25s; }
+.brief:hover .read .arr{ transform: translateX(4px); }
+
+/* ---------- PRINCIPAL ---------- */
+.principal{
+  padding: clamp(80px, 9vw, 128px) 0;
+}
+.prin-grid{
+  display:grid; grid-template-columns: 1fr 1.3fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: stretch;
+}
+@media (max-width:1080px){ .prin-grid{ grid-template-columns: 1fr; } }
+
+.prin-card{
+  position:relative;
+  background: var(--steel-2);
+  border:1px solid var(--rule-2);
+  padding: 28px;
+  min-height: 540px;
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+.prin-card .head{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  padding-bottom: 14px; border-bottom:1px solid var(--rule-1);
+}
+.prin-card .head b{ color:var(--txt); font-weight:500; }
+.prin-card .head .am{ color:var(--amber); }
+.prin-card .figframe{
+  flex:1;
+  margin: 18px 0;
+  background:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-color: var(--steel-1);
+  border:1px solid var(--rule-1);
+  position:relative;
+  overflow:hidden;
+}
+.prin-card .figframe svg{ position:absolute; inset:0; width:100%; height:100%; }
+.prin-card .figframe .photo-needed{
+  position:absolute; left:50%; bottom:18px; transform:translateX(-50%);
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  background:var(--steel-2); padding: 6px 12px;
+  border:1px solid var(--rule-2);
+}
+.prin-card .nameblock{
+  padding-top: 14px;
+  border-top:1px solid var(--rule-1);
+  display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
+}
+.prin-card .nameblock .nm{
+  font-family:var(--display); font-weight:800;
+  font-size: 22px; letter-spacing: -0.018em;
+}
+.prin-card .nameblock .ti{
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--amber);
+  margin-top: 6px;
+}
+.prin-card .nameblock .creds{
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  text-align: right; line-height: 1.7;
+}
+
+.prin-body h2{ max-width: 22ch; }
+.prin-body h2 .am{ color:var(--amber); }
+.prin-body p.lede{
+  margin-top: 24px; color:var(--txt-2);
+  font-size:16.5px; line-height:1.65; max-width:60ch;
+}
+.prin-body p.lede b{ color:var(--txt); font-weight:500; }
+.prin-body .quote{
+  font-family:var(--display); font-weight:600;
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.4; letter-spacing:-0.014em;
+  margin: 36px 0 8px;
+  padding: 22px 24px;
+  border-left: 3px solid var(--amber);
+  background: var(--steel-2);
+  color: var(--txt);
+  max-width: 52ch;
+}
+.prin-body .qsign{
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+  margin-top: 6px;
+}
+
+.cv{
+  margin-top: 44px;
+  display:grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border:1px solid var(--rule-2);
+}
+@media (max-width:780px){ .cv{ grid-template-columns: repeat(2, 1fr); } }
+.cv div{
+  padding: 16px 18px;
+  border-right:1px solid var(--rule-1);
+  background: var(--steel-2);
+}
+.cv div:last-child{ border-right:0; }
+@media (max-width:780px){
+  .cv div{ border-right:0; border-bottom:1px solid var(--rule-1); }
+  .cv div:nth-child(2n){ border-right:0; }
+}
+.cv .l{
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+}
+.cv .v{
+  font-family:var(--display); font-weight:700;
+  font-size: 18px; margin-top: 6px;
+}
+.cv .v .am{ color:var(--amber); }
+
+/* ---------- CONTACT ---------- */
+.contact{
+  padding: clamp(80px, 9vw, 144px) 0;
+  background: var(--steel-0);
+  border-top:1px solid var(--rule-1);
+  position:relative; overflow:hidden;
+}
+.contact::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(242,168,42,0.16), transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(242,168,42,0.06), transparent 50%);
+  pointer-events:none;
+}
+.contact-inner{
+  display:grid; grid-template-columns: 1.1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  position:relative;
+  align-items:start;
+}
+@media (max-width:980px){ .contact-inner{ grid-template-columns:1fr; } }
+.contact h2{ max-width: 16ch; }
+.contact h2 .am{ color:var(--amber); }
+.contact .lede{ margin-top:24px; color:var(--txt-2); font-size:16.5px; line-height:1.6; max-width:48ch; }
+.contact .send{
+  margin-top: 36px;
+  display:inline-flex; align-items:center; gap: 14px;
+  padding: 18px 26px;
+  background: var(--amber); color: var(--steel-0);
+  font-family:var(--mono); font-size: 12px; font-weight:700;
+  letter-spacing:0.16em; text-transform:uppercase;
+  border:1px solid var(--amber);
+  transition: background .2s, transform .2s;
+}
+.contact .send:hover{ background: #FFB937; }
+.contact .send .arr{ transition: transform .25s; }
+.contact .send:hover .arr{ transform: translateX(5px); }
+
+.contact-card{
+  background: var(--steel-2);
+  border: 1px solid var(--rule-2);
+  padding: 0;
+}
+.contact-card .row{
+  display:flex; justify-content:space-between; gap: 24px;
+  padding: 22px 24px;
+  border-bottom:1px solid var(--rule-1);
+}
+.contact-card .row:last-child{ border-bottom:0; }
+.contact-card .l{
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
+}
+.contact-card .v{
+  font-family:var(--display); font-weight:600;
+  font-size: 19px; letter-spacing:-0.014em; color:var(--txt);
+  margin-top: 6px;
+}
+.contact-card .v a:hover{ color:var(--amber); }
+.contact-card .small{
+  font-size:13.5px; color:var(--txt-2); margin-top:4px;
+}
+
+/* ---------- FOOTER ---------- */
+footer.foot{
+  background: var(--steel-0);
+  color: var(--txt-2);
+  padding: 26px 0;
+  border-top:1px solid var(--rule-1);
+}
+.foot-row{
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:14px;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.14em; text-transform:uppercase;
+}
+.foot-row b{ color:var(--txt); font-weight:500; }
+
+/* ---------- Reveal animation ---------- */
+.reveal{ opacity:0; transform: translateY(12px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-revealed{ opacity:1; transform:none; }
+.reveal.d1{ transition-delay:.05s; }
+.reveal.d2{ transition-delay:.10s; }
+.reveal.d3{ transition-delay:.15s; }
+.reveal.d4{ transition-delay:.20s; }
+.reveal.d5{ transition-delay:.25s; }
+
+/* ---------- Hazard chevron edge stripe ---------- */
+.hazstripe{
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--amber) 0 14px,
+    var(--steel-0) 14px 28px
+  );
+  border-top: 1px solid var(--rule-1);
+  border-bottom: 1px solid var(--rule-1);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============== STATUS BAR (HMI-style) ============== -->
+<div class="statusbar">
+  <div class="wrap row">
+    <div class="left">
+      <span class="pill"><span class="led"></span> Practice <b>online</b></span>
+      <span class="clip">UTC −07:00 · Fernie BC</span>
+    </div>
+    <div class="right">
+      <span class="clip">Engagements <b>Q2 2026</b> · taking inquiries</span>
+      <span><b>P.Eng</b> · <b>CMRP</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============== TOP BAR ============== -->
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="#" class="brand" aria-label="Brownclaw Asset Management">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <g fill="#F2A82A">
+          <path d="M9 18 q3 -11 9 -12 q1 5 -2 13 z"/>
+          <path d="M21 12 q4 -10 10 -8 q1 5 -3 11 z"/>
+          <path d="M33 12 q4 -10 10 -8 q1 5 -3 11 z"/>
+          <path d="M45 14 q5 -8 10 -5 q0 5 -5 10 z"/>
+          <ellipse cx="14" cy="29" rx="6" ry="9"/>
+          <ellipse cx="26" cy="27" rx="6.5" ry="10"/>
+          <ellipse cx="38" cy="27" rx="6.5" ry="10"/>
+          <ellipse cx="50" cy="29" rx="6" ry="9"/>
+          <path d="M14 44 q12 -8 22 0 q9 6 14 0 v9 q-6 4 -14 4 q-9 0 -22 -2 z"/>
+          <path d="M22 51 l5 -7 l5 7 l4 -5 l5 5 z" fill="#0D1014"/>
+        </g>
+      </svg>
+      <div class="word">
+        <span class="a">BROWNCLAW</span>
+        <span class="b">Asset Management · P.Eng · CMRP</span>
+      </div>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a class="item" href="#practice"><span class="num">01</span>CAPABILITIES</a>
+      <a class="item" href="#evidence"><span class="num">02</span>EVIDENCE</a>
+      <a class="item" href="#work"><span class="num">03</span>WORK</a>
+      <a class="item" href="#briefings"><span class="num">04</span>BRIEFINGS</a>
+      <a class="item" href="#principal"><span class="num">05</span>FIRM</a>
+      <a class="cta" href="#contact">
+        REQUEST ENGAGEMENT
+        <svg class="arr" width="14" height="10" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <div class="wrap">
+
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow reveal">Reliability Engineering · Asset Strategy · Mining &amp; Energy</span>
+
+        <h1 class="reveal d1">
+          We engineer <span class="kw">uptime</span><br/>
+          on the iron <span class="am">that</span><br/>
+          <span class="am">moves the rock.</span>
+        </h1>
+
+        <p class="hero-sub reveal d2">
+          Brownclaw is an independent reliability and asset-management
+          practice for mining and energy operators. We turn reactive
+          maintenance organizations into proactive ones — through
+          structured failure analysis, defensible asset strategy,
+          and on-the-ground execution with the people doing the work.
+        </p>
+
+        <div class="hero-cta reveal d3">
+          <a href="#contact" class="btn btn-amber">
+            Request engagement
+            <svg class="arr" width="14" height="10" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#work" class="btn btn-ghost">
+            Recent work
+            <svg class="arr" width="14" height="10" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="spec-row reveal d4">
+          <div class="spec">
+            <span class="l">Sectors</span>
+            <span class="v">Mining<small>·</small>Energy</span>
+          </div>
+          <div class="spec">
+            <span class="l">Practice yrs</span>
+            <span class="v">8<small>+</small></span>
+          </div>
+          <div class="spec">
+            <span class="l">Sites worked</span>
+            <span class="v">17<small>+</small></span>
+          </div>
+          <div class="spec">
+            <span class="l">Credentials</span>
+            <span class="v">P.Eng<small>·</small>CMRP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO PHOTO — site image in an engineering frame -->
+      <figure class="hero-photo reveal d2">
+        <div class="ph-head">
+          <div class="left"><b>SITE / 047</b> &nbsp;·&nbsp; PROCESSING PLANT &nbsp;·&nbsp; MAIN GALLERY</div>
+          <div class="right">DOC · 03 / 2026</div>
+        </div>
+
+        <div class="ph-frame">
+          <img src="brand/site-hero.jpg" alt="Heavy industrial processing plant — overhead conveyors, lifts, and structural steel above a process line." />
+          <span class="corner tl"></span>
+          <span class="corner tr"></span>
+          <span class="corner bl"></span>
+          <span class="corner br"></span>
+          <div class="ph-tag tag-tl">
+            <span class="dot"></span>
+            <b>OVERHEAD GALLERY</b>
+            <small>STRUCTURAL STEEL · CRANE BAY</small>
+          </div>
+          <div class="ph-tag tag-br">
+            <span class="dot amb"></span>
+            <b>PROCESS LINE</b>
+            <small>CONVEYOR · 1.4 km/h · NOM.</small>
+          </div>
+        </div>
+
+        <div class="ph-foot">
+          <span><b>WESTERN CANADA</b> · ENGAGEMENT ARCHIVE</span>
+          <span>SITE NAME WITHHELD UNDER NDA</span>
+        </div>
+      </figure>
+
+    </div>
+
+  </div>
+
+  <!-- commodity ribbon -->
+  <div class="ribbon">
+    <div class="wrap row">
+      <span class="label">SECTOR EXPERIENCE / COMMODITY</span>
+      <ul>
+        <li class="act">METALLURGICAL COAL</li>
+        <li class="act">DIAMOND</li>
+        <li class="act">GOLD</li>
+        <li class="act">COPPER</li>
+        <li class="act">ZINC</li>
+        <li>POTASH</li>
+        <li>OIL SANDS</li>
+        <li>HYDRO</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============== POSITION ============== -->
+<section class="position" id="position">
+  <div class="wrap grid">
+    <aside class="label-col reveal">
+      <div class="num">02<small>// POSITION</small></div>
+      <h3>Why this firm exists</h3>
+    </aside>
+
+    <div>
+      <p class="reveal d1">
+        Equipment doesn't fail at random. It fails for reasons —
+        <b>and the reasons are usually upstream of the work order.</b>
+      </p>
+      <p class="reveal d2">
+        Most operations don't have a maintenance problem. They have a
+        <span class="am">decision problem</span>: too many priorities,
+        not enough criticality, and a CMMS that records
+        <span class="strike">causes</span> symptoms.
+      </p>
+      <p class="reveal d3">
+        Brownclaw is built around one premise: reliability is engineered,
+        not hoped for. We bring the methods — RCFA, FMEA, RCM, criticality,
+        Weibull — and we bring them <b>onto your floor</b>, with the
+        people doing the work, until the program is yours, not ours.
+      </p>
+
+      <div class="signoff reveal d4">
+        <span><b>Connor Schriver, P.Eng, CMRP</b> · Principal</span>
+        <span>SIG / 2026.04 / FERNIE BC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- hazard chevron between sections -->
+<div class="hazstripe" aria-hidden="true"></div>
+
+<!-- ============== PRACTICE / CAPABILITIES ============== -->
+<section class="practice" id="practice">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="disp-xl">Three capabilities. <span class="am">One discipline.</span></h2>
+      <div class="right">
+        Each engagement combines all three to some degree. We scope tightly,
+        deliver in documented phases, and leave behind the methods so your
+        team runs the program when we leave.
+      </div>
+    </div>
+
+    <div class="practice-grid">
+
+      <article class="practice-cell reveal d1">
+        <div class="id">
+          <span><span class="n">CAP / 01</span></span>
+          <span>RELIABILITY</span>
+        </div>
+        <h3>Reliability Engineering</h3>
+        <p class="body">
+          Identify and eliminate root causes of equipment failure through
+          structured analysis. We work the failure modes that are
+          actually costing you the most — usually the ones nobody has
+          time to look at.
+        </p>
+        <div class="deliv">
+          <span class="dl">Methods used</span>
+          <ul>
+            <li class="am">RCFA</li><li>FMEA</li><li>Weibull</li>
+            <li>Bad-actor</li><li>PdM strategy</li><li>Reliability-block</li>
+          </ul>
+        </div>
+        <div class="deliv">
+          <span class="dl">Typical deliverables</span>
+          <ul>
+            <li>RCFA report</li><li>FMEA register</li>
+            <li>Bad-actor list</li><li>PdM plan</li>
+          </ul>
+        </div>
+        <a href="#" class="read">
+          Read the capability
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <article class="practice-cell reveal d2">
+        <div class="id">
+          <span><span class="n">CAP / 02</span></span>
+          <span>STRATEGY</span>
+        </div>
+        <h3>Asset Strategy Development</h3>
+        <p class="body">
+          Build maintenance strategies that match the asset, the operating
+          context, and the business case. Move from calendar-based PMs
+          to condition-based, criticality-weighted programs that survive
+          turnover.
+        </p>
+        <div class="deliv">
+          <span class="dl">Methods used</span>
+          <ul>
+            <li class="am">RCM2</li><li>Criticality</li>
+            <li>PM optimization</li><li>Spares strategy</li>
+            <li>Tactic library</li>
+          </ul>
+        </div>
+        <div class="deliv">
+          <span class="dl">Typical deliverables</span>
+          <ul>
+            <li>Criticality matrix</li><li>Tactic library</li>
+            <li>PM job plans</li><li>Spares spec</li>
+          </ul>
+        </div>
+        <a href="#" class="read">
+          Read the capability
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <article class="practice-cell reveal d3">
+        <div class="id">
+          <span><span class="n">CAP / 03</span></span>
+          <span>ASSESSMENT</span>
+        </div>
+        <h3>Maintenance &amp; Reliability Assessments</h3>
+        <p class="body">
+          A structured benchmark of where your program stands today
+          against industry practice — and a defensible roadmap to where
+          it needs to go. Useful for new GMs, due diligence,
+          and program relaunches.
+        </p>
+        <div class="deliv">
+          <span class="dl">Frameworks</span>
+          <ul>
+            <li class="am">SMRP pillars</li><li>UPTIME elements</li>
+            <li>Maturity scoring</li><li>KPI baseline</li>
+          </ul>
+        </div>
+        <div class="deliv">
+          <span class="dl">Typical deliverables</span>
+          <ul>
+            <li>Maturity score</li><li>Gap roadmap</li>
+            <li>KPI dashboard</li><li>Investment case</li>
+          </ul>
+        </div>
+        <a href="#" class="read">
+          Read the capability
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== EVIDENCE ============== -->
+<section class="evidence" id="evidence">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">RESULTS / SELECTED ENGAGEMENTS</span>
+        <h2 class="disp-xl" style="margin-top:18px;">Reliability is judged by what stays <span class="am">running.</span></h2>
+      </div>
+      <div class="meta">
+        Indicative figures from the last 36 months. Site names withheld
+        under NDA; references provided on request. All data drawn from
+        operator-side CMMS / historian extracts at engagement start
+        and engagement close.
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi reveal d1">
+        <div class="head-row">
+          <span class="nme">UNPLANNED DOWNTIME</span>
+          <span class="src">▼ Δ vs. baseline</span>
+        </div>
+        <div class="v tabular">−62<span class="u">%</span></div>
+        <div class="delta dn">9-mo. PM optimization · coal prep</div>
+        <div class="desc">From 14.8% → 5.6% on the prep plant after FMEA-driven tactic rewrite.</div>
+        <div class="ctx">Metallurgical coal · Western Canada</div>
+      </div>
+      <div class="kpi reveal d2">
+        <div class="head-row">
+          <span class="nme">RECURRING SAVINGS</span>
+          <span class="src">▼ annualised</span>
+        </div>
+        <div class="v tabular"><span class="pre">$</span>4.2<span class="u">M</span></div>
+        <div class="delta dn">PM rationalization · open-pit fleet</div>
+        <div class="desc">38% of work-orders retired or re-scoped after criticality reset.</div>
+        <div class="ctx">Open-pit mining · NWT</div>
+      </div>
+      <div class="kpi reveal d3">
+        <div class="head-row">
+          <span class="nme">MTBF · BAD ACTORS</span>
+          <span class="src">▲ Δ vs. baseline</span>
+        </div>
+        <div class="v tabular">8.5<span class="u">×</span></div>
+        <div class="delta up">RCFA-driven redesign · top-10 list</div>
+        <div class="desc">Mean time between failure on top-10 bad actors after redesign.</div>
+        <div class="ctx">Concentrator · Yukon</div>
+      </div>
+      <div class="kpi reveal d4">
+        <div class="head-row">
+          <span class="nme">ASSET AVAILABILITY</span>
+          <span class="src">▲ sustained 12 mo.</span>
+        </div>
+        <div class="v tabular">94.7<span class="u">%</span></div>
+        <div class="delta up">Up from 81% on critical line</div>
+        <div class="desc">Sustained 12-month availability on a primary crusher line.</div>
+        <div class="ctx">Crusher · Saskatchewan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WORK / CASE ============== -->
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="disp-xl">Evidence, <span class="am">not endorsements.</span></h2>
+      <div class="right">
+        Selected engagement. Site name withheld under NDA. Numbers below
+        are drawn directly from CMMS extracts at engagement start and
+        nine months on.
+        <br/><br/>
+        <a href="#" style="color:var(--amber); font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;">Browse the full archive →</a>
+      </div>
+    </div>
+
+    <article class="workcard reveal d1">
+      <div class="text">
+        <div class="meta">
+          <span><b>WORK / 047</b> &nbsp;·&nbsp; Coal preparation plant</span>
+          <span><b>09 MO</b> &nbsp;·&nbsp; 2025</span>
+        </div>
+
+        <h3>Restoring uptime at a 12 Mt/a metallurgical coal preparation plant.</h3>
+
+        <p class="summary">
+          A site running on a calendar-based PM program inherited from
+          construction. Bad-actors going unidentified for years. We rebuilt
+          the asset hierarchy, ran criticality across 1,800 tags, and
+          rewrote the tactic library against actual failure modes.
+          Operations staff trained in-place over two phases.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="v">−62<span class="am">%</span></div>
+            <div class="l">Downtime ▼</div>
+          </div>
+          <div class="stat">
+            <div class="v"><span class="am">$</span>3.8M</div>
+            <div class="l">Annual savings</div>
+          </div>
+          <div class="stat">
+            <div class="v">9<span class="am">mo</span></div>
+            <div class="l">Engagement</div>
+          </div>
+        </div>
+
+        <a href="#" class="read">
+          Read the brief (PDF, 8 pp.)
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="visual" aria-hidden="true">
+        <div class="stamp">
+          <b>P&amp;ID-RV04</b>
+          DENSE-MEDIUM CIRCUIT<br/>
+          SIMPLIFIED · NTS
+        </div>
+        <svg class="pid" viewBox="0 0 720 480" preserveAspectRatio="xMidYMid meet">
+          <!-- main process flow lines (P&ID-style) -->
+          <g stroke="#ECEEF0" stroke-width="1.2" fill="none" stroke-linejoin="miter">
+            <!-- main horizontal -->
+            <path d="M 30 110 L 130 110 L 170 150 L 290 150 L 320 180 L 440 180 L 470 220 L 580 220 L 620 180 L 690 180"/>
+            <!-- branch down -->
+            <path d="M 290 150 L 290 290 L 410 290 L 450 320 L 600 320 L 640 280 L 690 280"/>
+            <!-- branch down 2 -->
+            <path d="M 130 110 L 130 380 L 380 380 L 420 410 L 690 410"/>
+          </g>
+
+          <!-- valves (bowtie symbol) and pumps (circle with triangle) -->
+          <g stroke="#A8AEB6" stroke-width="1" fill="#0D1014">
+            <!-- valve -->
+            <g transform="translate(170,150)">
+              <path d="M -8 -8 L 8 8 L 8 -8 L -8 8 Z"/>
+            </g>
+            <g transform="translate(320,180)">
+              <path d="M -8 -8 L 8 8 L 8 -8 L -8 8 Z"/>
+            </g>
+            <g transform="translate(470,220)">
+              <path d="M -8 -8 L 8 8 L 8 -8 L -8 8 Z"/>
+            </g>
+            <g transform="translate(420,410)">
+              <path d="M -8 -8 L 8 8 L 8 -8 L -8 8 Z"/>
+            </g>
+            <!-- pump -->
+            <g transform="translate(380,380)">
+              <circle cx="0" cy="0" r="11"/>
+              <path d="M -7 -3 L 6 0 L -7 3 Z" fill="#A8AEB6"/>
+            </g>
+            <g transform="translate(450,320)">
+              <circle cx="0" cy="0" r="11"/>
+              <path d="M -7 -3 L 6 0 L -7 3 Z" fill="#A8AEB6"/>
+            </g>
+          </g>
+
+          <!-- equipment boxes -->
+          <g stroke="#ECEEF0" stroke-width="1.2" fill="#14181F">
+            <rect x="20" y="100" width="22" height="22" rx="1"/>
+            <rect x="120" y="100" width="22" height="22" rx="1"/>
+            <rect x="280" y="140" width="22" height="22" rx="1"/>
+            <rect x="430" y="170" width="22" height="22" rx="1"/>
+            <rect x="600" y="210" width="22" height="22" rx="1"/>
+            <rect x="680" y="170" width="22" height="22" rx="1"/>
+            <rect x="680" y="270" width="22" height="22" rx="1"/>
+            <rect x="680" y="400" width="22" height="22" rx="1"/>
+            <rect x="370" y="280" width="34" height="34" rx="1"/>
+          </g>
+
+          <!-- bad-actor highlights (amber + red) -->
+          <g>
+            <circle cx="291" cy="151" r="22" fill="none" stroke="#E04638" stroke-width="1.4" stroke-dasharray="3 2"/>
+            <circle cx="450" cy="320" r="20" fill="none" stroke="#F2A82A" stroke-width="1.4" stroke-dasharray="3 2"/>
+            <circle cx="380" cy="380" r="20" fill="none" stroke="#F2A82A" stroke-width="1.4" stroke-dasharray="3 2"/>
+          </g>
+
+          <!-- callouts -->
+          <g font-family="IBM Plex Mono, monospace" letter-spacing="1" fill="#A8AEB6">
+            <text x="20" y="92" font-size="9">FEED · ROM</text>
+            <text x="120" y="92" font-size="9">SCREEN-A</text>
+            <text x="265" y="132" font-size="9">CYC-04 · CRIT</text>
+            <text x="420" y="162" font-size="9">DENSE-MED</text>
+            <text x="362" y="272" font-size="9">FROTH-02 · BAD</text>
+            <text x="676" y="162" font-size="9">PROD-1</text>
+            <text x="676" y="262" font-size="9">PROD-2</text>
+            <text x="676" y="436" font-size="9">REJECTS</text>
+
+            <!-- highlighted F-MODE annotations -->
+            <text x="295" y="135" font-size="8" fill="#E04638">F-MODE 03 · SEAL</text>
+            <text x="455" y="345" font-size="8" fill="#F2A82A">F-MODE 09 · IMPELLER</text>
+            <text x="385" y="404" font-size="8" fill="#F2A82A">F-MODE 12 · BEARING</text>
+          </g>
+
+          <!-- vertical scale guides -->
+          <g stroke="#353C46" stroke-width="0.5" stroke-dasharray="3 3">
+            <line x1="170" y1="60" x2="170" y2="450"/>
+            <line x1="380" y1="60" x2="380" y2="450"/>
+            <line x1="580" y1="60" x2="580" y2="450"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="8" fill="#6B727B" letter-spacing="1">
+            <text x="170" y="55" text-anchor="middle">A1</text>
+            <text x="380" y="55" text-anchor="middle">A2</text>
+            <text x="580" y="55" text-anchor="middle">A3</text>
+            <text x="170" y="465" text-anchor="middle">A1</text>
+            <text x="380" y="465" text-anchor="middle">A2</text>
+            <text x="580" y="465" text-anchor="middle">A3</text>
+          </g>
+
+          <!-- corner crop -->
+          <g stroke="#4A525E" stroke-width="0.8" fill="none">
+            <path d="M10 10 L 10 22 M 10 10 L 22 10"/>
+            <path d="M710 10 L 710 22 M 710 10 L 698 10"/>
+            <path d="M10 470 L 10 458 M 10 470 L 22 470"/>
+            <path d="M710 470 L 710 458 M 710 470 L 698 470"/>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+    <div class="work-related">
+      <a href="#" class="reveal d2">
+        <span class="tag">DIAMOND · NWT</span>
+        <h4>Reframing the criticality matrix on a Tier-1 fleet program.</h4>
+        <span class="meta">14 MIN · 2025</span>
+      </a>
+      <a href="#" class="reveal d3">
+        <span class="tag">COPPER · BC</span>
+        <h4>What a six-week RCFA blitz uncovered in the SAG mill drive train.</h4>
+        <span class="meta">9 MIN · 2025</span>
+      </a>
+      <a href="#" class="reveal d4">
+        <span class="tag">ZINC · MB</span>
+        <h4>Designing a tactic library a relief operator can actually use.</h4>
+        <span class="meta">11 MIN · 2024</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== CRITICALITY (extra technical credibility) ============== -->
+<section class="crit" id="criticality">
+  <div class="wrap crit-grid">
+    <div class="text reveal">
+      <span class="eyebrow">METHOD / CRITICALITY</span>
+      <h2 class="disp-l" style="margin-top:18px;">Where to spend the next reliability dollar — and where <span class="am">not to.</span></h2>
+      <p>
+        Every site has a budget, and every budget has a fight. We rank
+        equipment criticality across <b style="color:var(--txt)">consequence</b>
+        (safety, environmental, production loss, repair cost) against
+        <b style="color:var(--txt)">probability</b> (failure history, age,
+        duty), and we hand back a defensible, signable register that
+        survives audit and turnover.
+      </p>
+      <div class="checks">
+        <div><span class="ch"></span><span>Asset hierarchy reset to <b>functional</b> level (not nameplate)</span></div>
+        <div><span class="ch"></span><span>Criticality scored against <b>your</b> risk matrix, not a generic one</span></div>
+        <div><span class="ch"></span><span>Each tactic <b>traced to a failure mode</b>, not a vendor recommendation</span></div>
+        <div><span class="ch"></span><span>Spares strategy reviewed against the new criticality call</span></div>
+      </div>
+    </div>
+
+    <div class="crit-matrix reveal d1">
+      <div class="head">
+        <span><b>REGISTER</b> · CRITICAL ASSETS · EXTRACT</span>
+        <span class="right">REV.04</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>TAG</th><th>EQUIPMENT</th><th>CRIT</th><th>HRS / MO</th><th>SCORE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="id">CRH-01</td>
+            <td class="eq">Primary gyratory crusher</td>
+            <td><span class="pill h">HIGH</span></td>
+            <td>+712</td>
+            <td><span class="bar b95"></span></td>
+          </tr>
+          <tr>
+            <td class="id">CONV-04</td>
+            <td class="eq">Overland conveyor 04</td>
+            <td><span class="pill h">HIGH</span></td>
+            <td>+708</td>
+            <td><span class="bar b80"></span></td>
+          </tr>
+          <tr>
+            <td class="id">SAG-01</td>
+            <td class="eq">SAG mill (drive train)</td>
+            <td><span class="pill h">HIGH</span></td>
+            <td>+704</td>
+            <td><span class="bar b80"></span></td>
+          </tr>
+          <tr>
+            <td class="id">CYC-04</td>
+            <td class="eq">Hydrocyclone bank · A2</td>
+            <td><span class="pill m">MED</span></td>
+            <td>+612</td>
+            <td><span class="bar b60"></span></td>
+          </tr>
+          <tr>
+            <td class="id">PMP-12</td>
+            <td class="eq">Slurry pump · froth feed</td>
+            <td><span class="pill m">MED</span></td>
+            <td>+540</td>
+            <td><span class="bar b60"></span></td>
+          </tr>
+          <tr>
+            <td class="id">FAN-03</td>
+            <td class="eq">Vent fan · concentrate dryer</td>
+            <td><span class="pill l">LOW</span></td>
+            <td>+360</td>
+            <td><span class="bar b40"></span></td>
+          </tr>
+          <tr>
+            <td class="id">COMP-08</td>
+            <td class="eq">Air compressor · backup</td>
+            <td><span class="pill l">LOW</span></td>
+            <td>&nbsp;+180</td>
+            <td><span class="bar b25"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BRIEFINGS / Insights ============== -->
+<section class="briefings" id="briefings">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="disp-xl">Field briefings. <span class="am">Plain-spoken.</span></h2>
+      <div class="right">
+        A rolling collection of technical memoranda, methods notes, and
+        lessons-from-the-floor. Written for the people doing the work —
+        free of the usual consulting jargon. Quarterly digest available.
+      </div>
+    </div>
+
+    <div class="brief-grid">
+      <article class="brief lead reveal d1">
+        <div class="id">
+          <span class="am">BRIEF / 014</span>
+          <span><b>RELIABILITY</b> · 04 MAR 2026 · 8 MIN</span>
+        </div>
+        <h3>Why your CMMS data is lying to you — and what to do about it.</h3>
+        <p class="excerpt">
+          Most failure-mode codes were filled in at 03:00 by someone
+          who needed to close a work order and go home. If you're using
+          that data to build a strategy, you're building it on fiction.
+          A practical guide to cleaning up before you optimize — without
+          a six-figure software bill.
+        </p>
+        <a href="#" class="read">
+          Read the brief
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <article class="brief reveal d2">
+        <div class="id">
+          <span class="am">BRIEF / 013</span>
+          <span><b>METHOD</b> · 21 FEB · 6 MIN</span>
+        </div>
+        <h3>The criticality assessment trap.</h3>
+        <p class="excerpt">
+          Ranking equipment is the easy part. Acting on the ranking is
+          the hard part. Three failure modes of failure-mode programs.
+        </p>
+        <a href="#" class="read">
+          Read the brief
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <article class="brief reveal d3">
+        <div class="id">
+          <span class="am">BRIEF / 012</span>
+          <span><b>FIELD</b> · 09 FEB · 11 MIN</span>
+        </div>
+        <h3>From reactive to proactive: a 90-day blueprint for mid-tier operations.</h3>
+        <p class="excerpt">
+          What to actually do in week 1, week 4, week 8 and week 12 if
+          you've been told to "fix maintenance" without a budget for
+          fancy software.
+        </p>
+        <a href="#" class="read">
+          Read the brief
+          <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+    </div>
+
+    <div class="reveal" style="margin-top: 36px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <a href="#" class="btn btn-ghost">
+        ARCHIVE
+        <svg class="arr" width="13" height="9" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="lbl"><b>QUARTERLY DIGEST</b><span class="dot">·</span> NO FLUFF <span class="dot">·</span> <a style="color:var(--amber)" href="#contact">JOIN THE LIST →</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRINCIPAL ============== -->
+<section class="principal" id="principal">
+  <div class="wrap prin-grid">
+
+    <figure class="prin-card reveal">
+      <div class="head">
+        <span><b>FILE 005</b> · PRINCIPAL</span>
+        <span class="am">ACTIVE</span>
+      </div>
+
+      <div class="figframe">
+        <!-- placeholder mountain + figure SVG -->
+        <svg viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="bgg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1B2028"/>
+              <stop offset="80%" stop-color="#0D1014"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="480" fill="url(#bgg)"/>
+          <!-- mountains -->
+          <path d="M 0 350 L 70 270 L 130 320 L 200 220 L 260 290 L 330 240 L 400 310 L 400 480 L 0 480 Z" fill="#14181F" stroke="#262C35" stroke-width="0.6"/>
+          <path d="M 0 400 L 60 360 L 130 380 L 220 320 L 280 360 L 360 330 L 400 360 L 400 480 L 0 480 Z" fill="#0B0E12"/>
+          <!-- figure silhouette -->
+          <g fill="#07090C">
+            <ellipse cx="200" cy="270" rx="32" ry="38"/>
+            <path d="M 130 480 L 130 380 Q 200 305 270 380 L 270 480 Z"/>
+          </g>
+          <!-- topo lines -->
+          <g fill="none" stroke="rgba(236,238,240,0.06)" stroke-width="0.5">
+            <path d="M -10 80 C 100 60, 200 110, 410 90"/>
+            <path d="M -10 115 C 100 95, 200 145, 410 125"/>
+            <path d="M -10 150 C 100 130, 200 180, 410 160"/>
+          </g>
+          <!-- registration crosshair -->
+          <g stroke="#F2A82A" stroke-width="0.7" fill="none" opacity="0.6">
+            <circle cx="350" cy="60" r="10"/>
+            <line x1="340" y1="60" x2="360" y2="60"/>
+            <line x1="350" y1="50" x2="350" y2="70"/>
+          </g>
+          <text x="320" y="84" font-family="IBM Plex Mono, monospace" font-size="8" fill="#F2A82A" letter-spacing="1.5">FRAME 01</text>
+        </svg>
+        <span class="photo-needed">PORTRAIT FRAME · PHOTO TO PLACE</span>
+      </div>
+
+      <div class="nameblock">
+        <div>
+          <div class="nm">CONNOR SCHRIVER</div>
+          <div class="ti">Principal · Reliability Engineer</div>
+        </div>
+        <div class="creds">
+          P.Eng<br/>
+          CMRP<br/>
+          FERNIE BC
+        </div>
+      </div>
+    </figure>
+
+    <div class="prin-body">
+      <span class="eyebrow reveal">FILE 005 · ABOUT THE FIRM</span>
+      <h2 class="disp-xl reveal d1" style="margin-top:18px;">Eight years on the iron.<br/>The seam, the pit, the <span class="am">control room.</span></h2>
+      <p class="lede reveal d2">
+        Connor Schriver is a Professional Engineer (P.Eng) and Certified
+        Maintenance &amp; Reliability Professional (CMRP) with on-site
+        experience across <b>metallurgical coal, diamond, gold, copper,
+        and zinc</b> operations in Western Canada and the Rocky Mountain
+        corridor. Brownclaw was founded to bring serious reliability
+        practice to operations that don't have a 200-person corporate
+        reliability team — and don't need one.
+      </p>
+      <blockquote class="quote reveal d3">
+        Asset management isn't an audit — it's a relationship between
+        the people doing the work and the strategy on paper. My job is
+        to close the gap.
+      </blockquote>
+      <div class="qsign reveal d3">— C. Schriver, P.Eng, CMRP</div>
+
+      <div class="cv reveal d4">
+        <div>
+          <div class="l">YEARS</div>
+          <div class="v">8<span class="am">+</span></div>
+        </div>
+        <div>
+          <div class="l">SECTORS</div>
+          <div class="v">Mining<span class="am">·</span>Energy</div>
+        </div>
+        <div>
+          <div class="l">CREDENTIALS</div>
+          <div class="v">P.Eng<span class="am">·</span>CMRP</div>
+        </div>
+        <div>
+          <div class="l">BASED</div>
+          <div class="v">Fernie BC</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- hazard chevron -->
+<div class="hazstripe" aria-hidden="true"></div>
+
+<!-- ============== CONTACT ============== -->
+<section class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <div>
+      <span class="eyebrow reveal">REQUEST · ENGAGEMENT INTAKE</span>
+      <h2 class="disp-xl reveal d1" style="margin-top:18px;">If your reliability program isn't aging well, <span class="am">let's talk.</span></h2>
+      <p class="lede reveal d2">
+        First conversations are free and structured. Thirty minutes is
+        usually enough to know whether we're a fit. Bring your worst
+        bad-actor; we'll bring questions.
+      </p>
+      <a href="#" class="send reveal d3">
+        REQUEST ENGAGEMENT
+        <svg class="arr" width="14" height="10" viewBox="0 0 14 10"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <aside class="contact-card reveal d2">
+      <div class="row">
+        <div>
+          <div class="l">DIRECT</div>
+          <div class="v"><a href="mailto:info@brownclawam.ca">info@brownclawam.ca</a></div>
+          <div class="small">Replies inside 24 hrs, Mon–Fri.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="l">TELEPHONE</div>
+          <div class="v"><a href="tel:+18662586572">+1 (866) 258-6572</a></div>
+          <div class="small">Pacific time. Voicemail forwards to email.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="l">LOCATED</div>
+          <div class="v">Fernie, British Columbia</div>
+          <div class="small">Working on-site across Western Canada and the Rocky Mountain corridor.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="l">QUARTERLY DIGEST</div>
+          <div class="v">Field briefings · no fluff.</div>
+          <div class="small">A short technical letter, four times a year.</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="foot">
+  <div class="wrap foot-row">
+    <span><b>BROWNCLAW ASSET MANAGEMENT</b> &nbsp;·&nbsp; FERNIE BC</span>
+    <span>P.ENG &nbsp;·&nbsp; CMRP &nbsp;·&nbsp; EST. 2024</span>
+    <span>© 2026 BROWNCLAW ASSET MANAGEMENT INC.</span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-revealed');
+        obs.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
