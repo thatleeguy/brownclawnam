@@ -1,13 +1,35 @@
+# Laravel runtime
+*.log
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.phpunit.cache
+/auth.json
+/node_modules
+/public/build
+/public/fonts-manifest.dev.json
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+
 # OS
 .DS_Store
 Thumbs.db
 
 # Editors
-/.idea/
-/.vscode/
-/.zed/
-
-# Local Claude Code project state
+/.codex
+/.cursor/
+/.idea
+/.nova
+/.vscode
+/.zed
 /.claude/
 
 # Finder duplicates
@@ -16,5 +38,5 @@ pitch copy.html
 *\ copy\ *.html
 
 # Unused stock from the previous WordPress theme — license unclear, do not redistribute
-brand/h3-*.webp
-brand/hero.jpg
+_design/brand/h3-*.webp
+_design/brand/hero.jpg
