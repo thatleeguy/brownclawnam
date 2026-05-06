@@ -7,6 +7,20 @@ set -e
 
 git pull origin "${FORGE_SITE_BRANCH:-main}"
 
+# Ensure Laravel runtime directories exist (defence-in-depth — git tracks
+# placeholder .gitignore files inside each, but realpath() failures here
+# are the most common first-deploy stumble).
+mkdir -p \
+    storage/framework/views \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/testing \
+    storage/logs \
+    storage/app/public \
+    storage/app/private \
+    bootstrap/cache
+chmod -R ug+rwx storage bootstrap/cache
+
 # First-deploy guard: Laravel's post-autoload script (package:discover) needs
 # .env to bootstrap. If Forge's environment editor hasn't been saved yet, seed
 # .env from the production example so composer install can complete. Connor
