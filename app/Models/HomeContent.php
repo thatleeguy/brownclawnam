@@ -10,10 +10,14 @@ class HomeContent extends Model
 
     protected $casts = [
         'spec_row'             => 'array',
+        'commodities'          => 'array',
         'position_paragraphs'  => 'array',
         'kpi_metrics'          => 'array',
         'criticality_checks'   => 'array',
         'criticality_register' => 'array',
+        'practice_visible'     => 'boolean',
+        'criticality_visible'  => 'boolean',
+        'briefings_visible'    => 'boolean',
     ];
 
     /** Singleton accessor — always returns the row, creating an empty one if missing. */

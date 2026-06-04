@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ContentSeeder::class,
             HomeContentSeeder::class,
+            SiteSettingSeeder::class,
+            TeamMemberSeeder::class,
         ]);
     }
 }

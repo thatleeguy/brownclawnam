@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
 @section('title', 'Brownclaw Asset Management — Reliability Engineering for Heavy Industry')
-@section('description', 'A reliability and asset-management practice for mining and energy operators. Led by Connor Schriver, P.Eng, CMRP. Based in Fernie, BC.')
+@section('description', 'A reliability and asset-management practice for mining and energy operators. Based in Fernie, BC.')
 
 @php
 $levelMap = ['h' => ['HIGH', 'h'], 'm' => ['MED', 'm'], 'l' => ['LOW', 'l']];
@@ -78,18 +78,24 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
     </div>
   </div>
 
+  @php
+    $commodities = $home->commodities ?: [
+      ['name' => 'METALLURGICAL COAL', 'active' => true],
+      ['name' => 'DIAMOND', 'active' => true],
+      ['name' => 'GOLD', 'active' => true],
+      ['name' => 'COPPER', 'active' => true],
+      ['name' => 'ZINC', 'active' => true],
+      ['name' => 'NUCLEAR', 'active' => true],
+      ['name' => 'URANIUM', 'active' => true],
+    ];
+  @endphp
   <div class="ribbon">
     <div class="wrap row">
-      <span class="label">SECTOR EXPERIENCE / COMMODITY</span>
+      <span class="label">{{ $home->ribbon_label ?: 'SECTOR EXPERIENCE / COMMODITY' }}</span>
       <ul>
-        <li class="act">METALLURGICAL COAL</li>
-        <li class="act">DIAMOND</li>
-        <li class="act">GOLD</li>
-        <li class="act">COPPER</li>
-        <li class="act">ZINC</li>
-        <li>POTASH</li>
-        <li>OIL SANDS</li>
-        <li>HYDRO</li>
+        @foreach($commodities as $commodity)
+          <li @class(['act' => $commodity['active'] ?? true])>{{ $commodity['name'] ?? '' }}</li>
+        @endforeach
       </ul>
     </div>
   </div>
@@ -100,14 +106,14 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
   <div class="wrap grid">
     <aside class="label-col reveal">
       <div class="num">02<small>// POSITION</small></div>
-      <h3>Why this firm exists</h3>
+      <h3>{{ $home->position_heading ?: 'What drives us' }}</h3>
     </aside>
     <div>
       @foreach(($home->position_paragraphs ?? []) as $i => $para)
         <p class="reveal d{{ $i + 1 }}">{!! is_array($para) ? ($para['text'] ?? '') : $para !!}</p>
       @endforeach
       <div class="signoff reveal d4">
-        <span><b>{{ $home->position_signature_name ?? 'Connor Schriver, P.Eng, CMRP · Principal' }}</b></span>
+        <span><b>{{ $home->position_signature_name ?? 'Connor Schriver · Founder' }}</b></span>
         <span>{{ $home->position_signature_note ?? 'SIG / 2026.04 / FERNIE BC' }}</span>
       </div>
     </div>
@@ -117,10 +123,11 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
 @include('partials.hazstripe')
 
 {{-- ============== PRACTICE ============== --}}
+@if($home->practice_visible)
 <section class="practice" id="practice">
   <div class="wrap">
     <div class="section-head reveal">
-      <h2 class="disp-xl">Three capabilities. <span class="am">One discipline.</span></h2>
+      <h2 class="disp-xl">{!! $home->practice_headline_html ?: 'Three capabilities. <span class="am">One discipline.</span>' !!}</h2>
       <div class="right">
         Each engagement combines all three to some degree. We scope tightly,
         deliver in documented phases, and leave behind the methods so your
@@ -163,6 +170,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
     </div>
   </div>
 </section>
+@endif
 
 {{-- ============== EVIDENCE ============== --}}
 <section class="evidence" id="evidence">
@@ -259,6 +267,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
 </section>
 
 {{-- ============== CRITICALITY ============== --}}
+@if($home->criticality_visible)
 <section class="crit" id="criticality">
   <div class="wrap crit-grid">
     <div class="text reveal">
@@ -296,8 +305,10 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
     </div>
   </div>
 </section>
+@endif
 
 {{-- ============== BRIEFINGS ============== --}}
+@if($home->briefings_visible)
 <section class="briefings" id="briefings">
   <div class="wrap">
     <div class="section-head reveal">
@@ -330,6 +341,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
     </div>
   </div>
 </section>
+@endif
 
 {{-- ============== PRINCIPAL ============== --}}
 @include('partials.principal')

@@ -9,6 +9,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
@@ -83,9 +84,28 @@ class ManageHome extends Page implements HasSchemas
                             ->maxItems(6)
                             ->columnSpanFull(),
                     ]),
+                    Section::make('Commodity ribbon')
+                        ->description('The strip of sectors/commodities beneath the hero. Untick "Highlight" to show an item in muted grey instead of amber.')
+                        ->schema([
+                            TextInput::make('ribbon_label')->label('Ribbon label')->placeholder('SECTOR EXPERIENCE / COMMODITY')->columnSpanFull(),
+                            Repeater::make('commodities')
+                                ->label(false)
+                                ->schema([
+                                    TextInput::make('name')->label('Commodity')->required()->placeholder('GOLD'),
+                                    Toggle::make('active')->label('Highlight')->default(true)->inline(false),
+                                ])
+                                ->columns(2)
+                                ->reorderable()
+                                ->defaultItems(0)
+                                ->maxItems(16)
+                                ->columnSpanFull(),
+                        ]),
                 ]),
 
                 Tab::make('Position')->icon(Heroicon::OutlinedChatBubbleBottomCenterText)->schema([
+                    Section::make('Heading')->schema([
+                        TextInput::make('position_heading')->label('Section heading')->placeholder('What drives us')->columnSpanFull(),
+                    ]),
                     Section::make('Manifesto paragraphs')
                         ->description('Each paragraph is its own row. HTML allowed: <b>, <span class="am">, <span class="strike">.')
                         ->schema([
@@ -181,6 +201,17 @@ class ManageHome extends Page implements HasSchemas
                             TextInput::make('briefings_kicker')->label('Kicker'),
                             Textarea::make('briefings_headline_html')->label('Headline (HTML)')->rows(2)->columnSpanFull(),
                             Textarea::make('briefings_meta')->label('Meta caption')->rows(3)->columnSpanFull(),
+                        ]),
+                ]),
+
+                Tab::make('Sections')->icon(Heroicon::OutlinedEye)->schema([
+                    Section::make('Show / hide home page sections')
+                        ->description('Turn whole sections of the home page on or off without deleting their content.')
+                        ->schema([
+                            Toggle::make('practice_visible')->label('Show the “Three capabilities” practice section')->columnSpanFull(),
+                            Textarea::make('practice_headline_html')->label('Practice headline (HTML)')->rows(2)->columnSpanFull(),
+                            Toggle::make('criticality_visible')->label('Show the “Method / Criticality” section')->columnSpanFull(),
+                            Toggle::make('briefings_visible')->label('Show the “Field briefings” section')->columnSpanFull(),
                         ]),
                 ]),
             ])->columnSpanFull(),

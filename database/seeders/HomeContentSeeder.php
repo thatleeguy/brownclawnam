@@ -7,8 +7,17 @@ use Illuminate\Database\Seeder;
 
 class HomeContentSeeder extends Seeder
 {
-    public function run(): void
+    /**
+     * @param bool $force  When false (default, e.g. db:seed), skip if the row
+     *                     already exists so admin edits are never overwritten.
+     *                     The one-time round-2 migration passes true.
+     */
+    public function run(bool $force = false): void
     {
+        if (! $force && HomeContent::whereKey(1)->exists()) {
+            return;
+        }
+
         HomeContent::updateOrCreate(['id' => 1], [
             // ----- HERO -----
             'hero_eyebrow' => 'Reliability Engineering · Asset Strategy · Mining & Energy',
@@ -20,19 +29,37 @@ class HomeContentSeeder extends Seeder
             'hero_secondary_cta_label' => 'Recent work',
             'spec_row' => [
                 ['label' => 'Sectors',       'value' => 'Mining', 'unit' => '·Energy'],
-                ['label' => 'Practice yrs',  'value' => '8',      'unit' => '+'],
+                ['label' => 'Practice yrs',  'value' => '9',      'unit' => '+'],
                 ['label' => 'Sites worked',  'value' => '17',     'unit' => '+'],
-                ['label' => 'Credentials',   'value' => 'P.Eng',  'unit' => '·CMRP'],
+            ],
+
+            // ----- COMMODITY RIBBON -----
+            'ribbon_label' => 'SECTOR EXPERIENCE / COMMODITY',
+            'commodities' => [
+                ['name' => 'METALLURGICAL COAL', 'active' => true],
+                ['name' => 'DIAMOND',            'active' => true],
+                ['name' => 'GOLD',               'active' => true],
+                ['name' => 'COPPER',             'active' => true],
+                ['name' => 'ZINC',               'active' => true],
+                ['name' => 'NUCLEAR',            'active' => true],
+                ['name' => 'URANIUM',            'active' => true],
             ],
 
             // ----- POSITION -----
+            'position_heading' => 'What drives us',
             'position_paragraphs' => [
                 'Equipment doesn\'t fail at random. It fails for reasons — <b>and the reasons are usually upstream of the work order.</b>',
                 'Most operations don\'t have a maintenance problem. They have a <span class="am">decision problem</span>: too many priorities, not enough criticality, and a CMMS that records <span class="strike">causes</span> symptoms.',
                 'Brownclaw is built around one premise: reliability is engineered, not hoped for. We bring the methods — RCFA, FMEA, RCM, criticality, Weibull — and we bring them <b>onto your floor</b>, with the people doing the work, until the program is yours, not ours.',
             ],
-            'position_signature_name' => 'Connor Schriver, P.Eng, CMRP · Principal',
+            'position_signature_name' => 'Connor Schriver · Founder',
             'position_signature_note' => 'SIG / 2026.04 / FERNIE BC',
+
+            // ----- SECTION VISIBILITY ----- (hidden per client until content is ready)
+            'practice_visible'       => false,
+            'practice_headline_html' => 'Three capabilities. <span class="am">One discipline.</span>',
+            'criticality_visible'    => false,
+            'briefings_visible'      => false,
 
             // ----- EVIDENCE -----
             'evidence_kicker' => 'RESULTS / SELECTED ENGAGEMENTS',

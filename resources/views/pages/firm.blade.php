@@ -1,6 +1,6 @@
 @extends('layouts.site')
 @section('title', 'Firm — Brownclaw Asset Management')
-@section('description', 'Connor Schriver, P.Eng, CMRP. Eight years in mining and energy reliability across coal, diamond, gold, copper, and zinc.')
+@section('description', 'Brownclaw Asset Management — nine years in mining and energy reliability across coal, diamond, gold, copper, and zinc.')
 
 @section('content')
 <section class="hero" style="padding-bottom:0">
@@ -12,7 +12,7 @@
       engagement archive runs across tier-1 metallurgical coal preparation,
       sub-arctic diamond fleet programs, copper concentrators, and zinc
       smelters — and we're scaling the team to match the work that's coming
-      in. Every engagement is led by a P.Eng on the floor, deliverables ship
+      in. Every engagement is led by an engineer on the floor, deliverables ship
       without a partner-stamp layer, and we hire engineers against the
       engagements they'll lead — never to fill a staffing matrix.
     </p>

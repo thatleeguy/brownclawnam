@@ -158,6 +158,7 @@ section{ position:relative; }
 }
 .brand{ display:flex; align-items:center; gap:12px; }
 .brand .mark{ width:34px; height:34px; flex-shrink:0; }
+.brand .brand-logo{ height:42px; width:auto; display:block; flex-shrink:0; }
 .brand .word{ display:flex; flex-direction:column; line-height:1; }
 .brand .word .a{
   font-family:var(--display); font-weight:800;
@@ -911,7 +912,8 @@ section{ position:relative; }
 .prin-card .head b{ color:var(--txt); font-weight:500; }
 .prin-card .head .am{ color:var(--amber); }
 .prin-card .figframe{
-  flex:1;
+  flex: none;
+  aspect-ratio: 1 / 1;
   margin: 18px 0;
   background:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
