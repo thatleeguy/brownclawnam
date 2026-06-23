@@ -150,6 +150,13 @@ class ManageHome extends Page implements HasSchemas
                                 TextInput::make('delta_caption')->label('Delta caption'),
                                 Textarea::make('description')->rows(2)->columnSpanFull(),
                                 TextInput::make('context')->label('Context')->placeholder('Metallurgical coal'),
+                                Select::make('link')
+                                    ->label('Links to case study (optional)')
+                                    ->helperText('When set, this result card becomes clickable and opens the chosen case study.')
+                                    ->options(fn (): array => \App\Models\CaseStudy::published()->pluck('title', 'slug')->all())
+                                    ->searchable()
+                                    ->placeholder('— no link —')
+                                    ->columnSpanFull(),
                             ])
                             ->columns(2)
                             ->reorderable()

@@ -105,7 +105,6 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
 <section class="position" id="position">
   <div class="wrap grid">
     <aside class="label-col reveal">
-      <div class="num">02<small>// POSITION</small></div>
       <h3>{{ $home->position_heading ?: 'What drives us' }}</h3>
     </aside>
     <div>
@@ -186,7 +185,11 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
     @if($home->kpi_metrics)
       <div class="kpi-grid">
         @foreach($home->kpi_metrics as $i => $m)
-          <div class="kpi reveal d{{ $i + 1 }}">
+          @php
+            $kpiHref = ! empty($m['link']) ? route('work.show', $m['link']) : null;
+            $kpiTag = $kpiHref ? 'a' : 'div';
+          @endphp
+          <{{ $kpiTag }} @class(['kpi', 'reveal', 'd' . ($i + 1), 'is-link' => $kpiHref]) @if($kpiHref) href="{{ $kpiHref }}" @endif>
             <div class="head-row">
               <span class="nme">{{ $m['name'] ?? '' }}</span>
               <span class="src">{{ $m['source'] ?? '' }}</span>
@@ -195,7 +198,8 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
             @if(!empty($m['delta_caption']))<div class="delta dn">{{ $m['delta_caption'] }}</div>@endif
             @if(!empty($m['description']))<div class="desc">{{ $m['description'] }}</div>@endif
             @if(!empty($m['context']))<div class="ctx">{{ $m['context'] }}</div>@endif
-          </div>
+            @if($kpiHref)<span class="kpi-go" aria-hidden="true">View case study →</span>@endif
+          </{{ $kpiTag }}>
         @endforeach
       </div>
     @endif

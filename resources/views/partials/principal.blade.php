@@ -6,23 +6,11 @@
   @foreach($team as $member)
     <div class="wrap prin-grid"@if(! $loop->first) style="margin-top: clamp(48px, 6vw, 80px);"@endif>
       <figure class="prin-card reveal">
-        <div class="head">
-          <span><b>{{ $member->file_label ?: 'FILE' }}</b>@if($member->badge_label) · {{ $member->badge_label }}@endif</span>
-          <span class="am">ACTIVE</span>
-        </div>
         <div class="figframe">
           <div class="prin-headshot">
             <img src="{{ asset($member->photo ?: 'img/connor.jpg') }}"
                  alt="Portrait of {{ \Illuminate\Support\Str::title($member->name) }} of Brownclaw Asset Management." />
           </div>
-          <svg class="prin-reg" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <g stroke="#F2A82A" stroke-width="0.7" fill="none" opacity="0.7">
-              <circle cx="350" cy="60" r="10"/>
-              <line x1="340" y1="60" x2="360" y2="60"/>
-              <line x1="350" y1="50" x2="350" y2="70"/>
-            </g>
-            <text x="320" y="84" font-family="IBM Plex Mono, monospace" font-size="8" fill="#F2A82A" letter-spacing="1.5">{{ $member->frame_label ?: 'FRAME' }}</text>
-          </svg>
         </div>
         <div class="nameblock">
           <div>

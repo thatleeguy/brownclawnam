@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             HomeContentSeeder::class,
             SiteSettingSeeder::class,
             TeamMemberSeeder::class,
+            FirmContentSeeder::class,
         ]);
     }
 }

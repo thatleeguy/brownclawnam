@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Capability;
 use App\Models\CaseStudy;
+use App\Models\FirmContent;
 use App\Models\HomeContent;
 use App\Models\Insight;
 use App\Models\TeamMember;
@@ -26,6 +27,7 @@ class PageController extends Controller
     public function firm()
     {
         return view('pages.firm', [
+            'firm' => FirmContent::current(),
             'team' => TeamMember::visible()->ordered()->get(),
         ]);
     }

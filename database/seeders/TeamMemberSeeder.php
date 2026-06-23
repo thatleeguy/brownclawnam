@@ -25,7 +25,7 @@ class TeamMemberSeeder extends Seeder
             'badge_label'   => 'FOUNDER',
             'file_label'    => 'FILE 005',
             'frame_label'   => 'FRAME 01',
-            'eyebrow'       => 'FILE 005 · ABOUT THE FIRM',
+            'eyebrow'       => 'ABOUT THE FIRM',
             'headline_html' => 'Nine years in reliability, built in <span class="am">Canadian mining.</span>',
             'bio_html'      => 'Connor Schriver is the Founder and Senior Consultant of Brownclaw Asset Management, '
                 . 'with on-site experience across remote Arctic operations and throughout Western Canada. '
@@ -51,7 +51,7 @@ class TeamMemberSeeder extends Seeder
             'badge_label'   => 'TEAM',
             'file_label'    => 'FILE 006',
             'frame_label'   => 'FRAME 02',
-            'eyebrow'       => 'FILE 006 · THE TEAM',
+            'eyebrow'       => 'THE TEAM',
             'headline_html' => 'Bringing new perspective to <span class="am">mining operations.</span>',
             'bio_html'      => 'Ross Vrana-Godwin is an Electrical Engineering EIT and Project Management Professional '
                 . 'with experience across manufacturing and industrial environments, including large-scale SAP EAM '
