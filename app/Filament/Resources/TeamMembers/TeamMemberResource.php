@@ -47,6 +47,7 @@ class TeamMemberResource extends Resource
                     ->disk('public_root')
                     ->directory('img/team')
                     ->visibility('public')
+                    ->fetchFileInformation(false)
                     ->imageEditor()
                     ->imageEditorAspectRatios(['1:1', null])
                     ->helperText('Upload a headshot — a square crop works best (shown in a circle).')
