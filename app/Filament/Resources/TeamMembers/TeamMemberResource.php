@@ -9,6 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -40,11 +41,16 @@ class TeamMemberResource extends Resource
                 TextInput::make('creds')->label('Credentials / location')
                     ->placeholder('FERNIE BC')
                     ->helperText('Use / to separate — shown stacked.'),
-                TextInput::make('photo')->label('Photo path')->placeholder('img/connor.jpg')
-                    ->helperText('Path under /public.'),
-                TextInput::make('badge_label')->label('Card badge')->placeholder('FOUNDER'),
-                TextInput::make('file_label')->label('File label')->placeholder('FILE 005'),
-                TextInput::make('frame_label')->label('Frame label')->placeholder('FRAME 01'),
+                FileUpload::make('photo')
+                    ->label('Headshot photo')
+                    ->image()
+                    ->disk('public_root')
+                    ->directory('img/team')
+                    ->visibility('public')
+                    ->imageEditor()
+                    ->imageEditorAspectRatios(['1:1', null])
+                    ->helperText('Upload a headshot — a square crop works best (shown in a circle).')
+                    ->columnSpanFull(),
             ])->columns(2),
 
             Section::make('Biography')->schema([

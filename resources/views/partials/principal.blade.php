@@ -8,8 +8,12 @@
       <figure class="prin-card reveal">
         <div class="figframe">
           <div class="prin-headshot">
-            <img src="{{ asset($member->photo ?: 'img/connor.jpg') }}"
-                 alt="Portrait of {{ \Illuminate\Support\Str::title($member->name) }} of Brownclaw Asset Management." />
+            @if($member->photo)
+              <img src="{{ asset($member->photo) }}"
+                   alt="Portrait of {{ \Illuminate\Support\Str::title($member->name) }} of Brownclaw Asset Management." />
+            @else
+              <span class="prin-initials" aria-hidden="true">{{ \Illuminate\Support\Str::of($member->name)->explode(' ')->map(fn($w) => \Illuminate\Support\Str::substr($w, 0, 1))->take(2)->implode('') }}</span>
+            @endif
           </div>
         </div>
         <div class="nameblock">

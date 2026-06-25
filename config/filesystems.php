@@ -47,6 +47,17 @@ return [
             'report' => false,
         ],
 
+        // Admin-uploaded site assets (team photos, etc.) written straight into
+        // /public so they serve via asset() with no storage symlink required.
+        'public_root' => [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/'),
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

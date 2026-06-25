@@ -1133,6 +1133,12 @@ footer.foot{
     0 16px 50px rgba(0,0,0,0.55);
   overflow: hidden;
   z-index: 2;
+  display: grid; place-items: center;
+}
+.prin-card .figframe .prin-headshot .prin-initials{
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(48px, 6vw, 88px); letter-spacing: -0.02em;
+  color: var(--rule-3);
 }
 .prin-card .figframe .prin-headshot img{
   width: 100%;
