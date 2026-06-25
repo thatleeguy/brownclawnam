@@ -7,12 +7,17 @@
     <div class="wrap prin-grid"@if(! $loop->first) style="margin-top: clamp(48px, 6vw, 80px);"@endif>
       <figure class="prin-card reveal">
         <div class="figframe">
+          @php
+            $initials = \Illuminate\Support\Str::of($member->name)->explode(' ')->map(fn($w) => \Illuminate\Support\Str::substr($w, 0, 1))->take(2)->implode('');
+          @endphp
           <div class="prin-headshot">
             @if($member->photo)
               <img src="{{ asset($member->photo) }}"
-                   alt="Portrait of {{ \Illuminate\Support\Str::title($member->name) }} of Brownclaw Asset Management." />
+                   alt="Portrait of {{ \Illuminate\Support\Str::title($member->name) }} of Brownclaw Asset Management."
+                   onerror="this.style.display='none'; this.nextElementSibling.hidden=false;" />
+              <span class="prin-initials" aria-hidden="true" hidden>{{ $initials }}</span>
             @else
-              <span class="prin-initials" aria-hidden="true">{{ \Illuminate\Support\Str::of($member->name)->explode(' ')->map(fn($w) => \Illuminate\Support\Str::substr($w, 0, 1))->take(2)->implode('') }}</span>
+              <span class="prin-initials" aria-hidden="true">{{ $initials }}</span>
             @endif
           </div>
         </div>
