@@ -47,14 +47,16 @@ return [
             'report' => false,
         ],
 
-        // Admin-uploaded site assets (team photos, etc.) written straight into
-        // /public so they serve via asset() with no storage symlink required.
-        // url is root-relative so generated links inherit the page scheme
-        // (avoids http/https mixed-content when APP_URL is misconfigured).
-        'public_root' => [
+        // Admin-uploaded site assets (team photos, hero, logo, favicon).
+        // Stored under storage/app/public so they PERSIST across deploys
+        // (public/ is a fresh checkout each deploy and would lose them).
+        // Served through the /media route — url is root-relative so links
+        // inherit the page scheme (no http/https mixed-content) and no
+        // storage symlink is required.
+        'uploads' => [
             'driver' => 'local',
-            'root' => public_path(),
-            'url' => '/',
+            'root' => storage_path('app/public'),
+            'url' => '/media',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

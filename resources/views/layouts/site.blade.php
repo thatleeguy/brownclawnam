@@ -6,8 +6,8 @@
 <title>@yield('title', $settings->default_meta_title ?: 'Brownclaw Asset Management — Reliability Engineering for Heavy Industry')</title>
 <meta name="description" content="@yield('description', $settings->default_meta_description ?: 'A reliability and asset-management practice for mining and energy operators.')" />
 
-<link rel="icon" type="image/png" href="{{ asset($settings->favicon_path ?: 'favicon.png') }}?v=claw2" />
-<link rel="apple-touch-icon" href="{{ asset($settings->favicon_path ?: 'favicon.png') }}?v=claw2" />
+<link rel="icon" type="image/png" href="{{ \App\Support\Media::url($settings->favicon_path) ?: asset('favicon.png') }}?v=claw2" />
+<link rel="apple-touch-icon" href="{{ \App\Support\Media::url($settings->favicon_path) ?: asset('favicon.png') }}?v=claw2" />
 
 <meta property="og:title" content="@yield('title', $settings->default_meta_title ?: 'Brownclaw Asset Management')" />
 <meta property="og:description" content="@yield('description', $settings->default_meta_description ?: 'Reliability and asset-management for mining and energy operators.')" />

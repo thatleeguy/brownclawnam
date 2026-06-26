@@ -27,6 +27,14 @@ Route::get('/briefings/{insight:slug}', [InsightController::class, 'show'])->nam
 
 Route::get('/firm', [PageController::class, 'firm'])->name('firm');
 
+// Serve admin-uploaded media from shared storage (persists across deploys, no symlink needed).
+Route::get('/media/{path}', function (string $path) {
+    abort_unless(\Illuminate\Support\Facades\Storage::disk('uploads')->exists($path), 404);
+
+    return \Illuminate\Support\Facades\Storage::disk('uploads')
+        ->response($path, null, ['Cache-Control' => 'public, max-age=604800']);
+})->where('path', '.*')->name('media');
+
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:6,1')->name('contact.store');
 

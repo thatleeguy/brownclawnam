@@ -4,7 +4,7 @@
 <header class="topbar">
   <div class="wrap topbar-inner">
     <a href="{{ route('home') }}" class="brand" aria-label="{{ $settings->brand_name ?: 'Brownclaw Asset Management' }}">
-      <img src="{{ asset($settings->logo_path ?: 'img/logo-side.png') }}" class="brand-logo" alt="{{ $settings->brand_name ?: 'Brownclaw Asset Management' }}" />
+      <img src="{{ \App\Support\Media::url($settings->logo_path) ?: asset('img/logo-side.png') }}" class="brand-logo" alt="{{ $settings->brand_name ?: 'Brownclaw Asset Management' }}" />
     </a>
 
     <nav class="nav" aria-label="Primary">

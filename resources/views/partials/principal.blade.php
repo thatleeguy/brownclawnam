@@ -12,7 +12,7 @@
           @endphp
           <div class="prin-headshot">
             @if($member->photo)
-              <img src="{{ asset($member->photo) }}"
+              <img src="{{ \App\Support\Media::url($member->photo) }}"
                    alt="Portrait of {{ \Illuminate\Support\Str::title($member->name) }} of Brownclaw Asset Management."
                    onerror="this.style.display='none'; this.nextElementSibling.hidden=false;" />
               <span class="prin-initials" aria-hidden="true" hidden>{{ $initials }}</span>

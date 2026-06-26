@@ -54,7 +54,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
           <div class="right">DOC · 03 / 2026</div>
         </div>
         <div class="ph-frame">
-          <img src="{{ asset($home->hero_image ?: 'img/site-hero.jpg') }}" alt="Loaded ultra-class haul truck on a surface-mine haul road at dusk." />
+          <img src="{{ \App\Support\Media::url($home->hero_image) ?: asset('img/site-hero.jpg') }}" alt="Loaded ultra-class haul truck on a surface-mine haul road at dusk." />
           <span class="corner tl"></span>
           <span class="corner tr"></span>
           <span class="corner bl"></span>
