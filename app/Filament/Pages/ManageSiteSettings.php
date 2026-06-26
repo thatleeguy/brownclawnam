@@ -6,6 +6,7 @@ use App\Models\SiteSetting;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -59,10 +60,24 @@ class ManageSiteSettings extends Page implements HasSchemas
                             ->placeholder('Asset Management'),
                     ])->columns(2),
                     Section::make('Logo & favicon')
-                        ->description('Paths under /public. Leave blank to use the defaults (img/logo-side.png and favicon.png).')
+                        ->description('Upload the header logo and browser favicon. Leave blank to keep the current image.')
                         ->schema([
-                            TextInput::make('logo_path')->label('Header logo path')->placeholder('img/logo-side.png'),
-                            TextInput::make('favicon_path')->label('Favicon path')->placeholder('favicon.png'),
+                            FileUpload::make('logo_path')
+                                ->label('Header logo')
+                                ->image()
+                                ->disk('public_root')
+                                ->directory('img')
+                                ->visibility('public')
+                                ->fetchFileInformation(false)
+                                ->helperText('Wide / horizontal lockup works best.'),
+                            FileUpload::make('favicon_path')
+                                ->label('Favicon')
+                                ->image()
+                                ->disk('public_root')
+                                ->directory('img')
+                                ->visibility('public')
+                                ->fetchFileInformation(false)
+                                ->helperText('Small square icon shown in the browser tab.'),
                         ])->columns(2),
                     Section::make('Default SEO')
                         ->description('Used as the browser title and meta description when a page does not set its own.')

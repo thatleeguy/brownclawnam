@@ -18,6 +18,7 @@ class HomeContent extends Model
         'practice_visible'     => 'boolean',
         'criticality_visible'  => 'boolean',
         'briefings_visible'    => 'boolean',
+        'work_visible'         => 'boolean',
     ];
 
     /** Singleton accessor — always returns the row, creating an empty one if missing. */

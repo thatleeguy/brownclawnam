@@ -50,24 +50,24 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
 
       <figure class="hero-photo reveal d2">
         <div class="ph-head">
-          <div class="left"><b>SITE / 047</b> &nbsp;·&nbsp; PROCESSING PLANT &nbsp;·&nbsp; MAIN GALLERY</div>
+          <div class="left"><b>SITE / 047</b> &nbsp;·&nbsp; SURFACE MINE &nbsp;·&nbsp; HAUL ROAD</div>
           <div class="right">DOC · 03 / 2026</div>
         </div>
         <div class="ph-frame">
-          <img src="{{ asset('img/site-hero.jpg') }}" alt="Heavy industrial processing plant — overhead conveyors, lifts, and structural steel above a process line." />
+          <img src="{{ asset($home->hero_image ?: 'img/site-hero.jpg') }}" alt="Loaded ultra-class haul truck on a surface-mine haul road at dusk." />
           <span class="corner tl"></span>
           <span class="corner tr"></span>
           <span class="corner bl"></span>
           <span class="corner br"></span>
           <div class="ph-tag tag-tl">
             <span class="dot"></span>
-            <b>OVERHEAD GALLERY</b>
-            <small>STRUCTURAL STEEL · CRANE BAY</small>
+            <b>HAUL FLEET</b>
+            <small>ULTRA-CLASS TRUCK · LOADED</small>
           </div>
           <div class="ph-tag tag-br">
             <span class="dot amb"></span>
-            <b>PROCESS LINE</b>
-            <small>CONVEYOR · 1.4 km/h · NOM.</small>
+            <b>HAUL CYCLE</b>
+            <small>ROM ORE · PIT TO CRUSHER</small>
           </div>
         </div>
         <div class="ph-foot">
@@ -207,6 +207,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
 </section>
 
 {{-- ============== WORK / CASE ============== --}}
+@if($home->work_visible)
 <section class="work" id="work">
   <div class="wrap">
     <div class="section-head reveal">
@@ -269,6 +270,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
     @endif
   </div>
 </section>
+@endif
 
 {{-- ============== CRITICALITY ============== --}}
 @if($home->criticality_visible)

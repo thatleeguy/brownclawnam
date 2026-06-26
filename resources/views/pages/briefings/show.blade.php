@@ -4,7 +4,7 @@
 
 @push('head')
 <style>
-.body-prose{ max-width: 68ch; margin: 0 auto; color: var(--txt-2); font-size: 17px; line-height: 1.72; }
+.body-prose{ max-width: 68ch; margin: 0 auto; color: var(--txt-2); font-size: var(--fs-body); line-height: 1.72; }
 .body-prose h2{ font-family: var(--display); font-weight: 700; color: var(--txt); font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -0.022em; margin: 56px 0 16px; line-height: 1.08; }
 .body-prose h3{ font-family: var(--display); font-weight: 700; color: var(--txt); font-size: 22px; letter-spacing: -0.014em; margin: 38px 0 12px; }
 .body-prose p, .body-prose ul, .body-prose ol{ margin: 0 0 1.1em; }

@@ -27,6 +27,7 @@ class HomeContentSeeder extends Seeder
             'hero_sub' => 'Brownclaw is an independent reliability and asset-management practice for mining and energy operators. We turn reactive maintenance organizations into proactive ones — through structured failure analysis, defensible asset strategy, and on-the-ground execution with the people doing the work.',
             'hero_primary_cta_label' => 'Request engagement',
             'hero_secondary_cta_label' => 'Recent work',
+            'hero_image' => 'img/site-hero.jpg',
             'spec_row' => [
                 ['label' => 'Sectors',       'value' => 'Mining', 'unit' => '·Energy'],
                 ['label' => 'Practice yrs',  'value' => '9',      'unit' => '+'],
@@ -60,6 +61,7 @@ class HomeContentSeeder extends Seeder
             'practice_headline_html' => 'Three capabilities. <span class="am">One discipline.</span>',
             'criticality_visible'    => false,
             'briefings_visible'      => false,
+            'work_visible'           => false,
 
             // ----- EVIDENCE -----
             'evidence_kicker' => 'RESULTS / SELECTED ENGAGEMENTS',

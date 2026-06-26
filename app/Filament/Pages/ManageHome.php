@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\HomeContent;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -69,6 +70,18 @@ class ManageHome extends Page implements HasSchemas
                         TextInput::make('hero_primary_cta_label')->label('Primary CTA label'),
                         TextInput::make('hero_secondary_cta_label')->label('Secondary CTA label'),
                     ])->columns(2),
+                    Section::make('Hero image')->schema([
+                        FileUpload::make('hero_image')
+                            ->label('Hero photo')
+                            ->image()
+                            ->disk('public_root')
+                            ->directory('img')
+                            ->visibility('public')
+                            ->fetchFileInformation(false)
+                            ->imageEditor()
+                            ->helperText('The large photo in the hero. Wide / landscape works best.')
+                            ->columnSpanFull(),
+                    ]),
                     Section::make('Spec row (4 metrics)')->schema([
                         Repeater::make('spec_row')
                             ->label(false)
@@ -217,6 +230,7 @@ class ManageHome extends Page implements HasSchemas
                         ->schema([
                             Toggle::make('practice_visible')->label('Show the “Three capabilities” practice section')->columnSpanFull(),
                             Textarea::make('practice_headline_html')->label('Practice headline (HTML)')->rows(2)->columnSpanFull(),
+                            Toggle::make('work_visible')->label('Show the “Evidence, not endorsements” work section')->columnSpanFull(),
                             Toggle::make('criticality_visible')->label('Show the “Method / Criticality” section')->columnSpanFull(),
                             Toggle::make('briefings_visible')->label('Show the “Field briefings” section')->columnSpanFull(),
                         ]),
