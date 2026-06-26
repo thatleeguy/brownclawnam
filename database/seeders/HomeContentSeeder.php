@@ -28,6 +28,16 @@ class HomeContentSeeder extends Seeder
             'hero_primary_cta_label' => 'Request engagement',
             'hero_secondary_cta_label' => 'Recent work',
             'hero_image' => 'img/site-hero.jpg',
+            'hero_captions' => [
+                'doc_label'  => '<b>SITE / 047</b> &nbsp;·&nbsp; SURFACE MINE &nbsp;·&nbsp; HAUL ROAD',
+                'doc_ref'    => 'DOC · 03 / 2026',
+                'tag1_title' => 'HAUL FLEET',
+                'tag1_sub'   => 'ULTRA-CLASS TRUCK · LOADED',
+                'tag2_title' => 'HAUL CYCLE',
+                'tag2_sub'   => 'ROM ORE · PIT TO CRUSHER',
+                'foot_left'  => '<b>WESTERN CANADA</b> · ENGAGEMENT ARCHIVE',
+                'foot_right' => '2025',
+            ],
             'spec_row' => [
                 ['label' => 'Sectors',       'value' => 'Mining', 'unit' => '·Energy'],
                 ['label' => 'Practice yrs',  'value' => '9',      'unit' => '+'],

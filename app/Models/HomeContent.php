@@ -11,6 +11,7 @@ class HomeContent extends Model
     protected $casts = [
         'spec_row'             => 'array',
         'commodities'          => 'array',
+        'hero_captions'        => 'array',
         'position_paragraphs'  => 'array',
         'kpi_metrics'          => 'array',
         'criticality_checks'   => 'array',

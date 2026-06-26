@@ -82,6 +82,22 @@ class ManageHome extends Page implements HasSchemas
                             ->helperText('The large photo in the hero. Wide / landscape works best.')
                             ->columnSpanFull(),
                     ]),
+                    Section::make('Hero photo captions')
+                        ->description('The small labels framing the hero photo. Leave a field blank to fall back to the default.')
+                        ->schema([
+                            TextInput::make('hero_captions.doc_label')->label('Top-left label')
+                                ->placeholder('SITE / 047 · SURFACE MINE · HAUL ROAD')
+                                ->helperText('HTML allowed — wrap text in <b>…</b> to bold it.')->columnSpanFull(),
+                            TextInput::make('hero_captions.doc_ref')->label('Top-right reference')->placeholder('DOC · 03 / 2026'),
+                            TextInput::make('hero_captions.foot_right')->label('Bottom-right label')->placeholder('2025'),
+                            TextInput::make('hero_captions.tag1_title')->label('Overlay tag 1 — title')->placeholder('HAUL FLEET'),
+                            TextInput::make('hero_captions.tag1_sub')->label('Overlay tag 1 — subtitle')->placeholder('ULTRA-CLASS TRUCK · LOADED'),
+                            TextInput::make('hero_captions.tag2_title')->label('Overlay tag 2 — title')->placeholder('HAUL CYCLE'),
+                            TextInput::make('hero_captions.tag2_sub')->label('Overlay tag 2 — subtitle')->placeholder('ROM ORE · PIT TO CRUSHER'),
+                            TextInput::make('hero_captions.foot_left')->label('Bottom-left label')
+                                ->placeholder('WESTERN CANADA · ENGAGEMENT ARCHIVE')
+                                ->helperText('HTML allowed — wrap text in <b>…</b> to bold it.')->columnSpanFull(),
+                        ])->columns(2),
                     Section::make('Spec row (4 metrics)')->schema([
                         Repeater::make('spec_row')
                             ->label(false)

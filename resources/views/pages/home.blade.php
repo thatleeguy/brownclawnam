@@ -48,10 +48,11 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
         @endif
       </div>
 
+      @php $cap = $home->hero_captions ?? []; @endphp
       <figure class="hero-photo reveal d2">
         <div class="ph-head">
-          <div class="left"><b>SITE / 047</b> &nbsp;·&nbsp; SURFACE MINE &nbsp;·&nbsp; HAUL ROAD</div>
-          <div class="right">DOC · 03 / 2026</div>
+          <div class="left">{!! $cap['doc_label'] ?? '<b>SITE / 047</b> &nbsp;·&nbsp; SURFACE MINE &nbsp;·&nbsp; HAUL ROAD' !!}</div>
+          <div class="right">{{ $cap['doc_ref'] ?? 'DOC · 03 / 2026' }}</div>
         </div>
         <div class="ph-frame">
           <img src="{{ \App\Support\Media::url($home->hero_image) ?: asset('img/site-hero.jpg') }}" alt="Loaded ultra-class haul truck on a surface-mine haul road at dusk." />
@@ -59,20 +60,24 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
           <span class="corner tr"></span>
           <span class="corner bl"></span>
           <span class="corner br"></span>
+          @if(($cap['tag1_title'] ?? 'HAUL FLEET') || ($cap['tag1_sub'] ?? null))
           <div class="ph-tag tag-tl">
             <span class="dot"></span>
-            <b>HAUL FLEET</b>
-            <small>ULTRA-CLASS TRUCK · LOADED</small>
+            <b>{{ $cap['tag1_title'] ?? 'HAUL FLEET' }}</b>
+            <small>{{ $cap['tag1_sub'] ?? 'ULTRA-CLASS TRUCK · LOADED' }}</small>
           </div>
+          @endif
+          @if(($cap['tag2_title'] ?? 'HAUL CYCLE') || ($cap['tag2_sub'] ?? null))
           <div class="ph-tag tag-br">
             <span class="dot amb"></span>
-            <b>HAUL CYCLE</b>
-            <small>ROM ORE · PIT TO CRUSHER</small>
+            <b>{{ $cap['tag2_title'] ?? 'HAUL CYCLE' }}</b>
+            <small>{{ $cap['tag2_sub'] ?? 'ROM ORE · PIT TO CRUSHER' }}</small>
           </div>
+          @endif
         </div>
         <div class="ph-foot">
-          <span><b>WESTERN CANADA</b> · ENGAGEMENT ARCHIVE</span>
-          <span>2025</span>
+          <span>{!! $cap['foot_left'] ?? '<b>WESTERN CANADA</b> · ENGAGEMENT ARCHIVE' !!}</span>
+          <span>{{ $cap['foot_right'] ?? '2025' }}</span>
         </div>
       </figure>
     </div>
