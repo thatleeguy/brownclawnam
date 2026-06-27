@@ -3,6 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+{{-- Google tag (gtag.js) — Google Analytics via Site Kit --}}
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=GT-M69KHL43" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["brownclawam.ca"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "GT-M69KHL43");
+window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); };
+</script>
 <title>@yield('title', $settings->default_meta_title ?: 'Brownclaw Asset Management — Reliability Engineering for Heavy Industry')</title>
 <meta name="description" content="@yield('description', $settings->default_meta_description ?: 'A reliability and asset-management practice for mining and energy operators.')" />
 
