@@ -3,7 +3,7 @@
 @section('description', 'Selected reliability and asset-management engagements with mining and energy operators.')
 
 @section('content')
-<section class="hero" style="padding-bottom:0">
+<section class="hero" style="padding-bottom: clamp(32px, 5vw, 72px)">
   <div class="wrap">
     <span class="eyebrow reveal">WORK · ENGAGEMENT ARCHIVE</span>
     <h1 class="reveal d1" style="margin-top:18px">Evidence, <span class="am">not endorsements.</span></h1>

@@ -39,6 +39,7 @@ class SiteSetting extends Model
                 ['number' => '03', 'label' => 'WORK',         'url' => '/work',         'visible' => true],
                 ['number' => '04', 'label' => 'BRIEFINGS',    'url' => '/briefings',    'visible' => true],
                 ['number' => '05', 'label' => 'FIRM',         'url' => '/firm',         'visible' => true],
+                ['number' => '06', 'label' => 'CONTRIBUTIONS', 'url' => '/contributions', 'visible' => true],
             ];
         }
 

@@ -3,15 +3,11 @@
 @section('description', 'Reliability engineering, asset strategy, and maintenance & reliability assessments for mining and energy operators.')
 
 @section('content')
-<section class="hero" style="padding-bottom:0">
+<section class="hero" style="padding-bottom: clamp(32px, 5vw, 72px)">
   <div class="wrap">
-    <span class="eyebrow reveal">CAPABILITIES / 01–{{ str_pad($capabilities->count(), 2, '0', STR_PAD_LEFT) }}</span>
-    <h1 class="reveal d1" style="margin-top:18px">Three capabilities. <span class="am">One discipline.</span></h1>
-    <p class="hero-sub reveal d2">
-      Each engagement combines all three to some degree. We scope tightly,
-      deliver in documented phases, and leave behind the methods so your
-      team runs the program when we leave.
-    </p>
+    <span class="eyebrow reveal">{{ $settings->capabilities_hero_eyebrow ?: 'CAPABILITIES / 01–' . str_pad($capabilities->count(), 2, '0', STR_PAD_LEFT) }}</span>
+    <h1 class="reveal d1" style="margin-top:18px">{!! $settings->capabilities_hero_headline_html ?: 'Three capabilities. <span class="am">One discipline.</span>' !!}</h1>
+    <p class="hero-sub reveal d2">{{ $settings->capabilities_hero_sub ?: 'Each engagement combines all three to some degree. We scope tightly, deliver in documented phases, and leave behind the methods so your team runs the program when we leave.' }}</p>
   </div>
 </section>
 

@@ -124,7 +124,9 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
   </div>
 </section>
 
+@if($home->practice_visible || $home->criticality_visible || $home->briefings_visible || $home->work_visible)
 @include('partials.hazstripe')
+@endif
 
 {{-- ============== PRACTICE ============== --}}
 @if($home->practice_visible)
@@ -355,6 +357,7 @@ $barClass = fn(int $score): string => 'b' . max(5, min(95, (int) round($score / 
 @endif
 
 {{-- ============== PRINCIPAL ============== --}}
+@include('partials.hazstripe')
 @include('partials.principal')
 
 @include('partials.hazstripe')

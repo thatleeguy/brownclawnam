@@ -1103,6 +1103,44 @@ footer.foot{
 }
 .foot-credit:hover{ color:var(--amber); }
 
+/* ---------- Contributions ---------- */
+.contrib-grid{
+  display:grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+}
+@media (max-width:980px){ .contrib-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:620px){ .contrib-grid{ grid-template-columns: 1fr; } }
+.contrib-card{
+  display:flex; flex-direction:column;
+  background: var(--steel-2); border:1px solid var(--rule-2);
+  overflow:hidden; transition: border-color .15s ease, transform .15s ease;
+}
+a.contrib-card:hover{ border-color: var(--amber); transform: translateY(-3px); }
+.contrib-photo{
+  position:relative; aspect-ratio: 4 / 3; background: var(--steel-1); overflow:hidden;
+}
+.contrib-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.contrib-year{
+  position:absolute; top:12px; left:12px;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em;
+  background: rgba(13,16,20,0.8); color:var(--amber);
+  padding:4px 10px; border:1px solid var(--rule-2);
+}
+.contrib-body{ padding: 22px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.contrib-body h3{ font-family:var(--display); font-weight:700; font-size:20px; letter-spacing:-0.014em; color:var(--txt); }
+.contrib-body p{ color:var(--txt-2); font-size:14.5px; line-height:1.6; }
+.contrib-metric{
+  margin-top:auto; padding-top:16px; border-top:1px solid var(--rule-1);
+  display:flex; align-items:baseline; gap:10px;
+}
+.contrib-metric .v{
+  font-family:var(--display); font-weight:800; font-size: clamp(28px, 3vw, 40px);
+  letter-spacing:-0.03em; color:var(--amber); line-height:1;
+}
+.contrib-metric .l{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mute);
+}
+
 /* ---------- Reveal animation ---------- */
 .reveal{ opacity:0; transform: translateY(12px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .reveal.is-revealed{ opacity:1; transform:none; }

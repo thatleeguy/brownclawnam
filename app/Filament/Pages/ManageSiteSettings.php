@@ -166,8 +166,18 @@ class ManageSiteSettings extends Page implements HasSchemas
                     ])->columns(2),
                 ]),
 
-                Tab::make('Contact CTA')->icon(Heroicon::OutlinedEnvelope)->schema([
-                    Section::make('Call-to-action band')->schema([
+                Tab::make('Contact page')->icon(Heroicon::OutlinedEnvelope)->schema([
+                    Section::make('Contact page hero')
+                        ->description('The top of the /contact page.')
+                        ->schema([
+                            TextInput::make('contact_hero_eyebrow')->label('Eyebrow')->placeholder('REQUEST · ENGAGEMENT INTAKE')->columnSpanFull(),
+                            Textarea::make('contact_hero_headline_html')->label('Headline (HTML)')->rows(2)->columnSpanFull()
+                                ->helperText('Use <span class="am">word</span> for the amber highlight.'),
+                            Textarea::make('contact_hero_sub')->label('Sub-paragraph')->rows(3)->columnSpanFull(),
+                        ]),
+                    Section::make('Call-to-action band')
+                        ->description('The "let\'s talk" band shown at the bottom of the home and other pages.')
+                        ->schema([
                         Toggle::make('cta_visible')->label('Show the contact CTA band')->default(true)->columnSpanFull(),
                         TextInput::make('cta_eyebrow')->label('Eyebrow')->placeholder('REQUEST · ENGAGEMENT INTAKE')->columnSpanFull(),
                         Textarea::make('cta_headline_html')->label('Headline (HTML)')->rows(2)->columnSpanFull()
@@ -185,6 +195,18 @@ class ManageSiteSettings extends Page implements HasSchemas
                         TextInput::make('contact_location_note')->label('Location note')->columnSpanFull()
                             ->placeholder('Working on-site across Western Canada and the Rocky Mountain corridor.'),
                     ])->columns(2),
+                ]),
+
+                Tab::make('Capabilities page')->icon(Heroicon::OutlinedRectangleStack)->schema([
+                    Section::make('Capabilities page hero')
+                        ->description('The top of the /capabilities page. The individual capabilities are managed under "Capabilities".')
+                        ->schema([
+                            TextInput::make('capabilities_hero_eyebrow')->label('Eyebrow')->placeholder('CAPABILITIES / 01–03')
+                                ->helperText('Leave blank to auto-number from the capability count.')->columnSpanFull(),
+                            Textarea::make('capabilities_hero_headline_html')->label('Headline (HTML)')->rows(2)->columnSpanFull()
+                                ->helperText('Use <span class="am">word</span> for the amber highlight.'),
+                            Textarea::make('capabilities_hero_sub')->label('Sub-paragraph')->rows(3)->columnSpanFull(),
+                        ]),
                 ]),
 
             ])->columnSpanFull(),

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Capability;
 use App\Models\CaseStudy;
+use App\Models\Contribution;
 use App\Models\FirmContent;
 use App\Models\HomeContent;
 use App\Models\Insight;
@@ -21,6 +22,13 @@ class PageController extends Controller
                                 ?? CaseStudy::published()->orderByDesc('published_at')->first(),
             'relatedCases'  => CaseStudy::published()->ordered()->limit(4)->get(),
             'insights'      => Insight::published()->ordered()->limit(3)->get(),
+        ]);
+    }
+
+    public function contributions()
+    {
+        return view('pages.contributions', [
+            'contributions' => Contribution::published()->ordered()->get(),
         ]);
     }
 
