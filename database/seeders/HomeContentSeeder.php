@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\HomeContent;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class HomeContentSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class HomeContentSeeder extends Seeder
             return;
         }
 
-        HomeContent::updateOrCreate(['id' => 1], [
+        $data = [
             // ----- HERO -----
             'hero_eyebrow' => 'Reliability Engineering · Asset Strategy · Mining & Energy',
             'hero_headline_html' => 'We engineer <span class="kw">uptime</span><br/>'
@@ -141,6 +142,15 @@ class HomeContentSeeder extends Seeder
             'briefings_kicker' => 'WRITING / FIELD BRIEFINGS',
             'briefings_headline_html' => 'Field briefings. <span class="am">Plain-spoken.</span>',
             'briefings_meta' => 'A rolling collection of technical memoranda, methods notes, and lessons-from-the-floor. Written for the people doing the work — free of the usual consulting jargon.',
-        ]);
+        ];
+
+        // A historical migration calls this seeder, so it can run against a
+        // schema that predates columns added later. Only write what exists.
+        $columns = Schema::getColumnListing('home_contents');
+
+        HomeContent::updateOrCreate(
+            ['id' => 1],
+            array_intersect_key($data, array_flip($columns))
+        );
     }
 }

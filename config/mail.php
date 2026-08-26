@@ -115,4 +115,17 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Notification Recipient
+    |--------------------------------------------------------------------------
+    |
+    | Where new contact form submissions are emailed. Leave unset to fall back
+    | to the contact_email on the site settings record, which is the address
+    | already shown on the contact page.
+    |
+    */
+
+    'contact_notify_to' => env('CONTACT_NOTIFY_TO'),
+
 ];
