@@ -33,7 +33,6 @@
   align-self: flex-start;
 }
 .cform .submit:hover{ background: #FFB937; }
-.cform .hp{ position: absolute; left: -9999px; }
 .success-banner{
   background: rgba(242,168,42,0.10);
   border: 1px solid var(--amber);
@@ -66,8 +65,6 @@
 
       <form action="{{ route('contact.store') }}" method="POST" class="cform">
         @csrf
-
-        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" />
 
         <div class="field">
           <label for="name">Your name</label>

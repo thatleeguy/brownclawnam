@@ -20,14 +20,6 @@ class StoreContactRequest extends FormRequest
             'role'    => ['nullable', 'string', 'max:120'],
             'phone'   => ['nullable', 'string', 'max:40'],
             'message' => ['required', 'string', 'max:4000'],
-            'website' => ['nullable', 'max:0'], // honeypot
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'website.max' => 'Submission rejected.',
         ];
     }
 }
