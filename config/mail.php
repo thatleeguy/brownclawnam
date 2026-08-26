@@ -49,6 +49,12 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        'mailtrap-sdk' => [
+            // Transport registered by railsware/mailtrap-php. Credentials come
+            // from MAILTRAP_API_KEY / MAILTRAP_HOST via the package's own config.
+            'transport' => 'mailtrap-sdk',
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -111,8 +117,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
+        'address' => env('MAIL_FROM_ADDRESS', env('MAILTRAP_FROM_EMAIL', 'hello@example.com')),
+        'name' => env('MAIL_FROM_NAME', env('MAILTRAP_FROM_NAME', env('APP_NAME', 'Laravel'))),
     ],
 
     /*

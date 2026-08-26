@@ -83,4 +83,26 @@ class ContactSubmissionTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertRedirect('/contact');
     }
+
+    public function test_the_mailtrap_sdk_transport_is_registered(): void
+    {
+        config()->set('services.mailtrap-sdk.apiKey', 'test-key');
+
+        $this->assertNotNull(Mail::mailer('mailtrap-sdk'));
+    }
+
+    public function test_the_from_address_falls_back_to_the_mailtrap_sender(): void
+    {
+        $_ENV['MAILTRAP_FROM_EMAIL'] = 'bold@example.test';
+        $_ENV['MAILTRAP_FROM_NAME'] = 'Bold News Wire';
+
+        try {
+            $config = require base_path('config/mail.php');
+
+            $this->assertSame('bold@example.test', $config['from']['address']);
+            $this->assertSame('Bold News Wire', $config['from']['name']);
+        } finally {
+            unset($_ENV['MAILTRAP_FROM_EMAIL'], $_ENV['MAILTRAP_FROM_NAME']);
+        }
+    }
 }
