@@ -16,7 +16,7 @@ class ContactController extends Controller
     public function store(StoreContactRequest $request)
     {
         ContactSubmission::create([
-            ...$request->validated(),
+            ...$request->safe()->except('website'), // 'website' is the honeypot, not a column
             'source'     => 'contact-page',
             'ip_hash'    => hash('sha256', $request->ip() . config('app.key')),
             'user_agent' => substr((string) $request->userAgent(), 0, 255),
