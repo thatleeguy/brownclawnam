@@ -49,7 +49,8 @@ class ContributionResource extends Resource
             ]),
             Section::make('Content')->schema([
                 TextInput::make('title')->required()->placeholder('Fernie Trails Alliance'),
-                TextInput::make('year')->label('Year')->placeholder('2024')->maxLength(12),
+                TextInput::make('year')->label('Year')->placeholder((string) now()->year)->maxLength(12)
+                    ->helperText('Groups contributions under this year on the public page.'),
                 Textarea::make('blurb')->label('Description')->rows(4)->columnSpanFull()
                     ->helperText('A sentence or two on the support / cause.'),
                 TextInput::make('link')->label('Link (optional)')->url()->placeholder('https://…')->columnSpanFull(),

@@ -1104,6 +1104,13 @@ footer.foot{
 .foot-credit:hover{ color:var(--amber); }
 
 /* ---------- Contributions ---------- */
+.contrib-year-group + .contrib-year-group{ margin-top:clamp(40px, 5vw, 64px); }
+.contrib-year-heading{
+  margin:0 0 14px; padding-bottom:8px;
+  border-bottom:3px solid var(--amber); color:var(--amber);
+  font-family:var(--display); font-weight:700;
+  font-size:clamp(28px, 3vw, 36px); line-height:1.2;
+}
 .contrib-grid{
   display:grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(20px, 2.5vw, 32px);
@@ -1120,12 +1127,6 @@ a.contrib-card:hover{ border-color: var(--amber); transform: translateY(-3px); }
   position:relative; aspect-ratio: 4 / 3; background: var(--steel-1); overflow:hidden;
 }
 .contrib-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-.contrib-year{
-  position:absolute; top:12px; left:12px;
-  font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em;
-  background: rgba(13,16,20,0.8); color:var(--amber);
-  padding:4px 10px; border:1px solid var(--rule-2);
-}
 .contrib-body{ padding: 22px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1; }
 .contrib-body h3{ font-family:var(--display); font-weight:700; font-size:20px; letter-spacing:-0.014em; color:var(--txt); }
 .contrib-body p{ color:var(--txt-2); font-size:14.5px; line-height:1.6; }
